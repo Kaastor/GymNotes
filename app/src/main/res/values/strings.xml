@@ -4,10 +4,13 @@
     <string name="settings_about">Instrukcja</string>
     <string name="settings_end">Zakończ</string>
     <string name="detail_name">Opis</string>
-    <string name="title_activity_main_menu">MainMenuActivity</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="drawer_first">Katalog</string>
+    <string name="drawer_second">Trening</string>
+    <string name="drawer_third">Dziennik</string>
+    <string name="drawer_header">Użytkownik/data</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
 </resources>

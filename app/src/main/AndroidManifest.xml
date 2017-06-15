@@ -23,6 +23,12 @@
             android:name=".DetailActivity"
             android:label="@string/detail_name" />
         <activity android:name=".CatalogActivity" />
+        <activity
+            android:name=".NavigationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
     </application>
 
 </manifest>
