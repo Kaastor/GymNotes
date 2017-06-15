@@ -21,8 +21,8 @@
         </activity>
         <activity
             android:name=".DetailActivity"
-            android:label="@string/detail_name">
-        </activity>
+            android:label="@string/detail_name" />
+        <activity android:name=".CatalogActivity" />
     </application>
 
 </manifest>

@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">GymNotes</string>
-    <string name="action_settings">Ustawienia</string>
-    <string name="action_about">Instrukcja</string>
-    <string name="action_end">Zakończ</string>
+    <string name="settings_settings">Ustawienia</string>
+    <string name="settings_about">Instrukcja</string>
+    <string name="settings_end">Zakończ</string>
     <string name="detail_name">Opis</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

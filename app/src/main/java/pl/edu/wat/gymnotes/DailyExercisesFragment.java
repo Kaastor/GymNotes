@@ -60,7 +60,7 @@ public class DailyExercisesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String info = "Informacje o ćwiczeniu";
-                Intent intent = new Intent(getActivity(), DetailActivity.class)
+                Intent intent = new Intent(getActivity(), CatalogActivity.class)
                         .putExtra(Intent.EXTRA_TEXT, info);
                 startActivity(intent);
             }
