@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">GymNotes</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_about">Instrukcja</string>
+    <string name="action_end">Zakończ</string>
+    <string name="detail_name">Opis</string>
 </resources>

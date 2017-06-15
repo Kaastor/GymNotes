@@ -1,12 +1,15 @@
 package pl.edu.wat.gymnotes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,11 +18,13 @@ import java.util.Arrays;
  * A placeholder fragment containing a simple view.
  */
 
-public class MainActivityFragment extends Fragment {
+public class DailyExercisesFragment extends Fragment {
 
     private ListView todayExercisesList;
+    private ArrayAdapter<String> todayExercisesAdapter;
+    
+    public DailyExercisesFragment() {
 
-    public MainActivityFragment() {
     }
 
     @Override
@@ -45,12 +50,21 @@ public class MainActivityFragment extends Fragment {
         ArrayList<String> dailyExercises = new ArrayList<>(Arrays.asList(dataArray));
 
 
-        ArrayAdapter<String> todayExercisesAdapter = new ArrayAdapter<>(getActivity().getBaseContext(),
+        todayExercisesAdapter = new ArrayAdapter<>(getActivity().getBaseContext(),
                 R.layout.list_item_exercises, R.id.list_item_exercises_textview, dailyExercises);
 
-        todayExercisesList = (ListView)rootView.findViewById(R.id.list_view_exercises);
+        todayExercisesList = rootView.findViewById(R.id.list_view_exercises);
         todayExercisesList.setAdapter(todayExercisesAdapter);
 
+        todayExercisesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String info = "Informacje o ćwiczeniu";
+                Intent intent = new Intent(getActivity(), DetailActivity.class)
+                        .putExtra(Intent.EXTRA_TEXT, info);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
