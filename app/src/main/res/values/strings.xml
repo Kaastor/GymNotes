@@ -2,7 +2,6 @@
     <string name="app_name">GymNotes</string>
     <string name="settings_settings">Ustawienia</string>
     <string name="settings_about">O programie</string>
-    <string name="settings_end">Zakończ</string>
     <string name="detail_name">Opis</string>
     <string name="catalog_name">Katalog</string>
     <string name="diary_name">Dziennik</string>

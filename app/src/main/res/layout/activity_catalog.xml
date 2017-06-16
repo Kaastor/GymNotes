@@ -6,5 +6,6 @@
     tools:context="pl.edu.wat.gymnotes.CatalogActivity">
 
     <include layout="@layout/app_toolbar"/>
+    <include layout="@layout/fragment_catalog"/>
 
 </android.support.constraint.ConstraintLayout>
