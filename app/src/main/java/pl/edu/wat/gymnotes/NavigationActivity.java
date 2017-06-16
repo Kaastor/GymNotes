@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class NavigationActivity extends BaseActivity {
 
@@ -88,10 +89,7 @@ public class NavigationActivity extends BaseActivity {
                 Intent intent = new Intent(this, CatalogActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_second_activity:
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                break;
+
             case R.id.nav_third_activity:
                 intent = new Intent(this, DiaryActivity.class);
                 startActivity(intent);
@@ -118,4 +116,5 @@ public class NavigationActivity extends BaseActivity {
         super.onRestart();
         nvDrawer.getMenu().getItem(MAIN_SITE_MENU_INDEX).setChecked(true);
     }
+
 }

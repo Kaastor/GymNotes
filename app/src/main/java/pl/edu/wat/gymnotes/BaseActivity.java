@@ -1,10 +1,12 @@
 package pl.edu.wat.gymnotes;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -41,8 +43,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_about) {
+            Toast.makeText(this, "ASD", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(BaseActivity.this, AboutActivity.class);
+            startActivityForResult(intent, 0);
+
         }
 
         return super.onOptionsItemSelected(item);

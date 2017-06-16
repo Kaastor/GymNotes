@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GymNotes</string>
     <string name="settings_settings">Ustawienia</string>
-    <string name="settings_about">Instrukcja</string>
+    <string name="settings_about">Informacje</string>
     <string name="settings_end">Zakończ</string>
     <string name="detail_name">Opis</string>
     <string name="catalog_name">Katalog</string>
@@ -15,5 +15,9 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+    <string name="about_creators">Mateusz Cąkała, Piotr Jakubiak, Przemysław Czuba</string>
+    <string name="about_mail">pracowite.s@gmail.com</string>
+    <string name="about_about">Aplikacja trenigowa</string>
+    about_about
     <string name="action_settings">Settings</string>
 </resources>
