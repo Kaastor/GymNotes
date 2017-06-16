@@ -1,5 +1,6 @@
 package pl.edu.wat.gymnotes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,8 +30,11 @@ public class CatalogFragment extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "asd",
-                        Toast.LENGTH_SHORT).show();
+                String info = "Informacje o ćwiczeniu";
+
+                Intent intent = new Intent(getActivity(), DetailActivity.class)
+                        .putExtra(Intent.EXTRA_TEXT, info);
+                startActivity(intent);
             }
         });
 

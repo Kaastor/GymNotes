@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -59,11 +60,7 @@ public class DailyExercisesFragment extends Fragment {
         todayExercisesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String info = "Informacje o ćwiczeniu";
-
-                Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, info);
-                startActivity(intent);
+                Toast.makeText(getActivity(), "Coś", Toast.LENGTH_SHORT).show();
             }
         });
         return rootView;

@@ -3,17 +3,10 @@ package pl.edu.wat.gymnotes.data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-import android.os.Handler;
-import android.os.HandlerThread;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,7 +18,6 @@ public class TestUtilities {
 
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     static String date = "1982-11-08";
-//    static String date = sdf.format(new Date());
 
     static void validateCursor(String error, Cursor valueCursor, ContentValues expectedValues) {
         assertTrue("Empty cursor returned. " + error, valueCursor.moveToFirst());
