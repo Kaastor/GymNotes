@@ -45,6 +45,10 @@
             android:label="@string/settings_about"
             android:theme="@style/AppTheme">
         </activity>
+
+        <provider
+            android:authorities="pl.edu.wat.gymnotes.app"
+            android:name=".data.ExerciseProvider" />
     </application>
 
 </manifest>

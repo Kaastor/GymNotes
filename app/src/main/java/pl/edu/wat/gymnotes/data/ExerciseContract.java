@@ -35,6 +35,10 @@ public class ExerciseContract {
         public static Uri buildExerciseUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+
+//        public static Uri buildPracticeForId(long id) {
+//            return CONTENT_URI.buildUpon().appendQueryParameter(_ID, id).build();
+//        }
     }
 
 
