@@ -34,8 +34,10 @@ public class ImageAdapter extends BaseAdapter {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
 //            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-//            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 //            imageView.setPadding(5,5,5,5);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setAdjustViewBounds(true);
+
         } else {
             imageView = (ImageView) convertView;
         }
@@ -46,7 +48,7 @@ public class ImageAdapter extends BaseAdapter {
 
     // references to our images
     private Integer[] mThumbIds = {
-            R.drawable.about, R.drawable.about,
+            R.drawable.pompka, R.drawable.about,
             R.drawable.about,R.drawable.about,
             R.drawable.about,R.drawable.about,
             R.drawable.about,R.drawable.about,
