@@ -6,4 +6,7 @@
     android:layout_height="match_parent"
     tools:context="pl.edu.wat.gymnotes.DetailActivity">
 
+    <include layout="@layout/fragment_detail" />
+
+
 </android.support.constraint.ConstraintLayout>

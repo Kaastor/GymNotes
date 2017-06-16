@@ -7,7 +7,7 @@
     tools:context="pl.edu.wat.gymnotes.MainActivity">
 
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/fragment_main" />
     <include layout="@layout/app_toolbar"/>
 
     <android.support.design.widget.FloatingActionButton

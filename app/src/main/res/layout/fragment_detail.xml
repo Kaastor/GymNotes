@@ -1,13 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_detail"
+    android:name="pl.edu.wat.gymnotes.DetailFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailFragment"
-    tools:showIn="@layout/activity_detail">
-
-    <TextView
-        android:id="@+id/detail_text"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-</FrameLayout>
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:layout="@layout/fragment_detail_view" />
