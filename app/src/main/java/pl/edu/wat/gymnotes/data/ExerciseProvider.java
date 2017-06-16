@@ -15,20 +15,19 @@ public class ExerciseProvider extends ContentProvider{
     public static final UriMatcher sUriMatcher = buildUriMatcher();
     private ExerciseDbHelper exerciseDbHelper;
 
-    static final int EXERCISES = 100;
+    static final int EXERCISE = 100;
     static final int EXERCISE_FOR_ID = 101;
     static final int PRACTICE = 200;
-    static final int PRACTICES = 201;
-    static final int PRACTICE_WITH_DATE = 202;
+    static final int PRACTICE_WITH_DATE = 201;
 
     static UriMatcher buildUriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = ExerciseContract.CONTENT_AUTHORITY;
 
-        matcher.addURI(authority, ExerciseContract.PATH_EXERCISE, EXERCISES);
-//        matcher.addURI(authority, ExerciseContract.PATH_EXERCISE + "/#", EXERCISE_FOR_ID);
+        matcher.addURI(authority, ExerciseContract.PATH_EXERCISE, EXERCISE);
+//        matcher.addURI(authority, ExerciseContract.PATH_EXERCISE + "/*", EXERCISE_FOR_ID);
 
-        matcher.addURI(authority, ExerciseContract.PATH_PRACTICE, PRACTICES);
+        matcher.addURI(authority, ExerciseContract.PATH_PRACTICE, PRACTICE);
         matcher.addURI(authority, ExerciseContract.PATH_PRACTICE + "/*", PRACTICE_WITH_DATE);
 
         return matcher;
@@ -44,9 +43,9 @@ public class ExerciseProvider extends ContentProvider{
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs,
                         @Nullable String sortOrder) {
-        Cursor retCursor;
+        Cursor retCursor = null;
         switch (sUriMatcher.match(uri)){
-            case EXERCISES:
+            case EXERCISE:
                 retCursor = exerciseDbHelper.getReadableDatabase().query(
                         ExerciseContract.ExerciseEntry.TABLE_NAME,
                         projection,
@@ -57,7 +56,7 @@ public class ExerciseProvider extends ContentProvider{
                         sortOrder
                 );
                 break;
-            case PRACTICES:
+            case PRACTICE:
                 retCursor = exerciseDbHelper.getReadableDatabase().query(
                         ExerciseContract.PracticeEntry.TABLE_NAME,
                         projection,
@@ -69,7 +68,7 @@ public class ExerciseProvider extends ContentProvider{
                 );
                 break;
         }
-        return null;
+        return retCursor;
     }
 
     @Nullable
@@ -78,9 +77,9 @@ public class ExerciseProvider extends ContentProvider{
         final int match = sUriMatcher.match(uri);
 
         switch (match){
-            case EXERCISES:
+            case EXERCISE:
                 return ExerciseContract.ExerciseEntry.CONTENT_TYPE;
-            case PRACTICES:
+            case PRACTICE:
                 return ExerciseContract.PracticeEntry.CONTENT_TYPE;
             case PRACTICE_WITH_DATE:
                 return ExerciseContract.PracticeEntry.CONTENT_TYPE;
@@ -105,21 +104,97 @@ public class ExerciseProvider extends ContentProvider{
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
+            case EXERCISE: {
+                long _id = database.insert(ExerciseContract.ExerciseEntry.TABLE_NAME, null, contentValues);
+                if (_id > 0)
+                    returnUri = ExerciseContract.ExerciseEntry.buildExerciseUri(_id);
+                else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
+
         getContext().getContentResolver().notifyChange(uri, null);
         database.close();
         return returnUri;
     }
 
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+        final SQLiteDatabase database = exerciseDbHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsDeleted;
+        // this makes delete all rows return the number of rows deleted
+        if ( null == selection ) selection = "1";
+        switch (match) {
+            case PRACTICE:
+                rowsDeleted = database.delete(
+                        ExerciseContract.PracticeEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case EXERCISE:
+                rowsDeleted = database.delete(
+                        ExerciseContract.ExerciseEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        // Because a null deletes all rows
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String selection, @Nullable String[] selectionArgs) {
+        final SQLiteDatabase database = exerciseDbHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsUpdated;
+        // this makes delete all rows return the number of rows deleted
+        if ( null == selection ) selection = "1";
+        switch (match) {
+            case PRACTICE:
+                rowsUpdated = database.update(ExerciseContract.PracticeEntry.TABLE_NAME, contentValues, selection,
+                        selectionArgs);
+                break;
+            case EXERCISE:
+                rowsUpdated = database.update(ExerciseContract.ExerciseEntry.TABLE_NAME, contentValues, selection,
+                        selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
+    }
+
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        final SQLiteDatabase db = exerciseDbHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case PRACTICE:
+                db.beginTransaction();
+                int returnCount = 0;
+                try {
+                    for (ContentValues value : values) {
+                        long _id = db.insert(ExerciseContract.PracticeEntry.TABLE_NAME, null, value);
+                        if (_id != -1) {
+                            returnCount++;
+                        }
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            default:
+                return super.bulkInsert(uri, values);
+        }
     }
 }

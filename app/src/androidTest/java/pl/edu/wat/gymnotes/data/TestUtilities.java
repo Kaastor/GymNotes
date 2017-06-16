@@ -3,8 +3,12 @@ package pl.edu.wat.gymnotes.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.HandlerThread;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -72,4 +76,5 @@ public class TestUtilities {
 
         return testValues;
     }
+
 }
