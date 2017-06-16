@@ -8,7 +8,6 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "ASD2", Toast.LENGTH_SHORT).show();
     }
 
     @Override

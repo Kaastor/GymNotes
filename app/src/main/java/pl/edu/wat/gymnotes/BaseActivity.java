@@ -44,10 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
-            Toast.makeText(this, "ASD", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(BaseActivity.this, AboutActivity.class);
             startActivityForResult(intent, 0);
-
         }
 
         return super.onOptionsItemSelected(item);
