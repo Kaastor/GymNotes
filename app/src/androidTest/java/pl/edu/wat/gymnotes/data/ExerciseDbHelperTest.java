@@ -8,8 +8,6 @@ import android.test.AndroidTestCase;
 import org.junit.Test;
 
 
-
-
 public class ExerciseDbHelperTest extends AndroidTestCase {
 
     public static final String LOG_TAG = ExerciseDbHelperTest.class.getSimpleName();
