@@ -9,10 +9,17 @@
     tools:context=".DetailFragment"
     tools:showIn="@layout/activity_detail">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        app:srcCompat="@drawable/header" />
+
     <TextView
         android:id="@+id/detail_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:elevation="1dp"
         android:text="TextView" />
 </LinearLayout>
