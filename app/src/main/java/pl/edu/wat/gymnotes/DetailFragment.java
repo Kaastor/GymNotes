@@ -1,5 +1,6 @@
 package pl.edu.wat.gymnotes;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,8 @@ import android.widget.TextView;
 public class DetailFragment extends Fragment {
 
 
-    public DetailFragment() {}
+    public DetailFragment() {
+       }
 
 
     @Override

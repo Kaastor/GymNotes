@@ -12,7 +12,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,11 +21,12 @@
         </activity>
         <activity
             android:name=".DetailActivity"
+            android:theme="@style/AppTheme"
             android:label="@string/detail_name" />
         <activity android:name=".CatalogActivity" />
         <activity
             android:name=".NavigationActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
 
         </activity>
 
