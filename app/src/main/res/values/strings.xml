@@ -4,6 +4,7 @@
     <string name="settings_about">Instrukcja</string>
     <string name="settings_end">Zakończ</string>
     <string name="detail_name">Opis</string>
+    <string name="catalog_name">Katalog</string>
 
     <string name="drawer_first">Katalog</string>
     <string name="drawer_second">Trening</string>
