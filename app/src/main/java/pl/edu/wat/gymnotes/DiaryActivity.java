@@ -2,7 +2,7 @@ package pl.edu.wat.gymnotes;
 
 import android.os.Bundle;
 
-public class CatalogActivity extends BaseActivity {
+public class DiaryActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -11,6 +11,6 @@ public class CatalogActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_catalog;
+        return R.layout.activity_diary;
     }
 }

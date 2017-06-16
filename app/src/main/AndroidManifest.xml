@@ -16,24 +16,26 @@
         </activity>
         <activity
             android:name=".DetailActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/detail_name" />
-
-        <activity android:name=".CatalogActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/catalog_name" >
-
+            android:label="@string/detail_name"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".CatalogActivity"
+            android:label="@string/catalog_name"
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".NavigationActivity"
+            android:label="@string/main_site_name"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".DiaryActivity"
+            android:label="@string/diary_name"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

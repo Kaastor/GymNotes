@@ -2,23 +2,22 @@ package pl.edu.wat.gymnotes;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 public class NavigationActivity extends BaseActivity {
 
+    private static final int MAIN_SITE_MENU_INDEX = 1;
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private MenuItem currentMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +30,14 @@ public class NavigationActivity extends BaseActivity {
 
         drawerToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(drawerToggle);
+        Class startFragment = DailyExercisesFragment.class;
+
+        try {
+            fragmentManager.beginTransaction().replace(R.id.flContent, (DailyExercisesFragment)startFragment.newInstance()).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -65,6 +72,7 @@ public class NavigationActivity extends BaseActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        currentMenuItem = menuItem;
                         selectDrawerItem(menuItem);
                         return true;
                     }
@@ -74,39 +82,40 @@ public class NavigationActivity extends BaseActivity {
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
-        Class fragmentClass;
+        Class fragmentClass = DailyExercisesFragment.class;
         switch(menuItem.getItemId()) {
-            case R.id.nav_first_fragment:
-//                fragmentClass = DailyExercisesFragment.class;
+            case R.id.nav_first_activity:
                 Intent intent = new Intent(this, CatalogActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_second_fragment:
-//                fragmentClass = SecondFragment.class;
+            case R.id.nav_second_activity:
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
-//            case R.id.nav_third_fragment:
-//                fragmentClass = ThirdFragment.class;
-//                break;
+            case R.id.nav_third_activity:
+                intent = new Intent(this, DiaryActivity.class);
+                startActivity(intent);
+                break;
             default:
-                fragmentClass = DetailFragment.class;
+                fragmentClass = DailyExercisesFragment.class;
         }
-//        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        // Insert the fragment by replacing any existing fragment
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-//
-//        // Highlight the selected item has been done by NavigationView
-//        menuItem.setChecked(true);
-//        // Set action bar title
-//        setTitle(menuItem.getTitle());
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Insert the fragment by replacing any existing fragment
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+        // Highlight the selected item has been done by NavigationView
+//        currentMenuItem.setChecked(true);
         // Close the navigation drawer
         mDrawer.closeDrawers();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        nvDrawer.getMenu().getItem(MAIN_SITE_MENU_INDEX).setChecked(true);
+    }
 }
