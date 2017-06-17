@@ -65,7 +65,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        deleteAllRecords();
+//        deleteAllRecords();
     }
 
     @Test
@@ -119,18 +119,18 @@ public class ExerciseProviderTest extends AndroidTestCase {
         ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        long locationRowId = TestUtilities.insertSimpleExerciseValues(mContext);
+        long exerciseRowId = TestUtilities.insertSimpleExerciseValues(mContext);
 
         // Fantastic.  Now that we have a location, add some weather!
-        ContentValues practiceValues = TestUtilities.createSimplePracticeValues(locationRowId);
+        ContentValues practiceValues = TestUtilities.createSimplePracticeValues(exerciseRowId);
 
-        long weatherRowId = db.insert(PracticeEntry.TABLE_NAME, null, practiceValues);
-        assertTrue("Unable to Insert WeatherEntry into the Database", weatherRowId != -1);
+        long practiceRowId = db.insert(PracticeEntry.TABLE_NAME, null, practiceValues);
+        assertTrue("Unable to Insert PracticeEntry into the Database", practiceRowId != -1);
         db.close();
 
         // Test the basic content provider query
         Cursor practiceCursor = mContext.getContentResolver().query(
-                PracticeEntry.CONTENT_URI,
+                PracticeEntry.buildPracticeForDate(TestUtilities.date),
                 null,
                 null,
                 null,
@@ -218,7 +218,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
 
         // A cursor is your primary interface to the query results.
         cursor = mContext.getContentResolver().query(
-                PracticeEntry.CONTENT_URI,
+                PracticeEntry.buildPracticeForDate(TestUtilities.date),
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
                 null, // values for "where" clause
@@ -227,7 +227,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
 
         if (cursor.moveToFirst()){
             do{
-                String data = cursor.getString(cursor.getColumnIndex("reps"));
+                String data = cursor.getString(cursor.getColumnIndex("date"));
                 System.out.println("Gowno " + data);
             }while(cursor.moveToNext());
         }
@@ -245,6 +245,25 @@ public class ExerciseProviderTest extends AndroidTestCase {
         cursor.close();
     }
 
+    public void testPracticeQueryForDate() {
 
+        Cursor cursor;
+        cursor = mContext.getContentResolver().query(
+                PracticeEntry.buildPracticeForDate(TestUtilities.date),
+                null, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                PracticeEntry.COLUMN_DATE + " ASC"  // sort order == by DATE ASCENDING
+        );
+
+        if (cursor.moveToFirst()){
+            do{
+                String data = cursor.getString(cursor.getColumnIndex("date"));
+                System.out.println(cursor.getCount() + " Gowno " + data);
+            }while(cursor.moveToNext());
+        }
+
+
+    }
 
 }

@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,8 +17,9 @@ import static junit.framework.Assert.assertTrue;
 
 public class TestUtilities {
 
-    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    static String date = "1982-11-08";
+    static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//    static String date = sdf.format(Calendar.getInstance().getTime());
+    static String date = "11-08-1982";
 
     static void validateCursor(String error, Cursor valueCursor, ContentValues expectedValues) {
         assertTrue("Empty cursor returned. " + error, valueCursor.moveToFirst());

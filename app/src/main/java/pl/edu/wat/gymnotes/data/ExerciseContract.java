@@ -68,7 +68,11 @@ public class ExerciseContract {
         }
 
         public static Uri buildPracticeForDate(String date) {
-            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_DATE, date).build();
+            return CONTENT_URI.buildUpon().appendPath(date).build();
+        }
+
+        public static String getDateFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
         }
     }
 

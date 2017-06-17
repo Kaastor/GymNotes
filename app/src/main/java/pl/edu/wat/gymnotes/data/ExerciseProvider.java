@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,20 @@ public class ExerciseProvider extends ContentProvider{
 
     public static final UriMatcher sUriMatcher = buildUriMatcher();
     private ExerciseDbHelper exerciseDbHelper;
+
+    private static final SQLiteQueryBuilder sPracticeWithExerciseQueryBuilder;
+    static{
+        sPracticeWithExerciseQueryBuilder = new SQLiteQueryBuilder();
+        //This is an inner join which looks like
+        //weather INNER JOIN location ON weather.location_id = location._id
+        sPracticeWithExerciseQueryBuilder.setTables(
+                ExerciseContract.PracticeEntry.TABLE_NAME + " INNER JOIN " +
+                        ExerciseContract.ExerciseEntry.TABLE_NAME +
+                        " ON " + ExerciseContract.PracticeEntry.TABLE_NAME +
+                        "." + ExerciseContract.PracticeEntry.COLUMN_EX_KEY +
+                        " = " + ExerciseContract.ExerciseEntry.TABLE_NAME +
+                        "." + ExerciseContract.ExerciseEntry._ID);
+    }
 
     static final int EXERCISE = 100;
     static final int EXERCISE_FOR_NAME = 101;
@@ -55,6 +70,9 @@ public class ExerciseProvider extends ContentProvider{
                         null,
                         sortOrder
                 );
+                break;
+            case PRACTICE_WITH_DATE:
+                retCursor = getPracticeByDate(uri, projection, sortOrder);
                 break;
             case PRACTICE:
                 retCursor = exerciseDbHelper.getReadableDatabase().query(
@@ -198,5 +216,24 @@ public class ExerciseProvider extends ContentProvider{
             default:
                 return super.bulkInsert(uri, values);
         }
+    }
+
+    private static final String sPracticeDateSelection =
+            ExerciseContract.PracticeEntry.TABLE_NAME+
+                    "." + ExerciseContract.PracticeEntry.COLUMN_DATE + " = ? ";
+
+    private Cursor getPracticeByDate(
+            Uri uri, String[] projection, String sortOrder) {
+        String date = ExerciseContract.PracticeEntry.getDateFromUri(uri);
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(ExerciseContract.PracticeEntry.TABLE_NAME);
+        return queryBuilder.query(exerciseDbHelper.getReadableDatabase(),
+                projection,
+                sPracticeDateSelection,
+                new String[]{date},
+                null,
+                null,
+                sortOrder
+        );
     }
 }
