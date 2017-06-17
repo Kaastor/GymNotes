@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
@@ -58,20 +59,29 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
                 new int[]{
                         R.id.item_gird_exercise
                 },
-                0);
+                0
+        );
+
         GridView gridview = (GridView) rootView.findViewById(R.id.exercises_grid_view);
+
         gridview.setAdapter(mExerciseAdapter);
 //        gridview.setAdapter(new ImageAdapter(getActivity().getBaseContext()));
 
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String info = "Informacje o ćwiczeniu";
-//
-//                Intent intent = new Intent(getActivity(), DetailActivity.class)
-//                        .putExtra(Intent.EXTRA_TEXT, info);
-//                startActivity(intent);
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                SimpleCursorAdapter adapter = (SimpleCursorAdapter) adapterView.getAdapter();
+                Cursor cursor = adapter.getCursor();
+                if(null != cursor && cursor.moveToPosition(position)){
+                    String[] exerciseDescription = new String[]{
+                            cursor.getString(COL_EXERCISE_NAME),
+                            cursor.getString(COL_EXERCISE_DESC)
+                    };
+                    Intent intent = new Intent(getActivity(), DetailActivity.class)
+                            .putExtra("exerciseDescription", exerciseDescription);
+                    startActivity(intent);
+                }
             }
         });
 
