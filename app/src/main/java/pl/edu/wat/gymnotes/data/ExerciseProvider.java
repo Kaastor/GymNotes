@@ -34,6 +34,7 @@ public class ExerciseProvider extends ContentProvider{
     static final int EXERCISE_FOR_NAME = 101;
     static final int PRACTICE = 200;
     static final int PRACTICE_WITH_DATE = 201;
+    static final int PRACTICE_DISTINCT = 202;
 
     static UriMatcher buildUriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -44,6 +45,7 @@ public class ExerciseProvider extends ContentProvider{
 
         matcher.addURI(authority, ExerciseContract.PATH_PRACTICE, PRACTICE);
         matcher.addURI(authority, ExerciseContract.PATH_PRACTICE + "/*", PRACTICE_WITH_DATE);
+        matcher.addURI(authority, ExerciseContract.PATH_DIST_PRACTICE , PRACTICE_DISTINCT);
 
         return matcher;
     }
@@ -73,6 +75,9 @@ public class ExerciseProvider extends ContentProvider{
                 break;
             case PRACTICE_WITH_DATE:
                 retCursor = getPracticeByDate(uri, projection, sortOrder);
+                break;
+            case PRACTICE_DISTINCT:
+                retCursor = getDistinctPracticesDates(uri, projection, sortOrder);
                 break;
             case PRACTICE:
                 retCursor = exerciseDbHelper.getReadableDatabase().query(
@@ -219,15 +224,33 @@ public class ExerciseProvider extends ContentProvider{
     }
 
     private static final String sPracticeDateSelection =
-            "p"+ "." + ExerciseContract.PracticeEntry.COLUMN_DATE + " = ? ";
+            "p"+                    "." + ExerciseContract.PracticeEntry.COLUMN_DATE + " = ? ";
 
     private Cursor getPracticeByDate(
             Uri uri, String[] projection, String sortOrder) {
         String date = ExerciseContract.PracticeEntry.getDateFromUri(uri);
+//        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+//        queryBuilder.setTables(ExerciseContract.PracticeEntry.TABLE_NAME);
         return sPracticeWithExerciseQueryBuilder.query(exerciseDbHelper.getReadableDatabase(),
                 projection,
                 sPracticeDateSelection,
                 new String[]{date},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    private Cursor getDistinctPracticesDates(
+            Uri uri, String[] projection, String sortOrder) {
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(ExerciseContract.PracticeEntry.TABLE_NAME);
+        queryBuilder.setDistinct(true);
+        return queryBuilder.query(
+                exerciseDbHelper.getReadableDatabase(),
+                projection,
+                null,
+                null,
                 null,
                 null,
                 sortOrder

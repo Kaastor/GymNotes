@@ -9,6 +9,7 @@ public class DiaryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_diary;

@@ -18,8 +18,8 @@ import static junit.framework.Assert.assertTrue;
 public class TestUtilities {
 
     static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    static String date = sdf.format(Calendar.getInstance().getTime());
-//    static String date = "11-08-1982";
+//    static String date = sdf.format(Calendar.getInstance().getTime());
+    static String date = "15-06-2017";
 
     static void validateCursor(String error, Cursor valueCursor, ContentValues expectedValues) {
         assertTrue("Empty cursor returned. " + error, valueCursor.moveToFirst());

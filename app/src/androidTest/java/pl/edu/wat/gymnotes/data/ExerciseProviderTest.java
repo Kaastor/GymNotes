@@ -4,14 +4,11 @@ import pl.edu.wat.gymnotes.data.ExerciseContract.PracticeEntry;
 import pl.edu.wat.gymnotes.data.ExerciseContract.ExerciseEntry;
 
 import android.content.ComponentName;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-import android.provider.Settings;
 import android.test.AndroidTestCase;
 
 import org.junit.Test;
@@ -181,11 +178,11 @@ public class ExerciseProviderTest extends AndroidTestCase {
         for ( int i = 0; i < BULK_INSERT_RECORDS_TO_INSERT; i++ ) {
             ContentValues practiceValues = new ContentValues();
             if(i<5)
-                practiceValues.put(PracticeEntry.COLUMN_EX_KEY, 1);
+                practiceValues.put(PracticeEntry.COLUMN_EX_KEY, 3);
             if(i>=5 && i< 10)
                 practiceValues.put(PracticeEntry.COLUMN_EX_KEY, 2);
             if(i>=10)
-                practiceValues.put(PracticeEntry.COLUMN_EX_KEY, 3);
+                practiceValues.put(PracticeEntry.COLUMN_EX_KEY, 1);
             practiceValues.put(PracticeEntry.COLUMN_DATE, currentTestDate);
             practiceValues.put(PracticeEntry.COLUMN_SERIES, 10);
             practiceValues.put(PracticeEntry.COLUMN_REPS, i);
@@ -248,6 +245,25 @@ public class ExerciseProviderTest extends AndroidTestCase {
                 String data = cursor.getString(cursor.getColumnIndex("date"));
                 String nameEx = cursor.getString(cursor.getColumnIndex("name"));
                 System.out.println(cursor.getCount() + " Gowno " + data + " " + nameEx);
+            }while(cursor.moveToNext());
+        }
+    }
+
+    public void testPracticeQueryForDates() {
+        Cursor cursor;
+        cursor = mContext.getContentResolver().query(
+                PracticeEntry.buildDistinctPracticesDates(),
+                new String[]{
+                        PracticeEntry.COLUMN_DATE}, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                PracticeEntry.COLUMN_DATE + " ASC"  // sort order == by DATE ASCENDING
+        );
+
+        if (cursor.moveToFirst()){
+            do{
+                String data = cursor.getString(cursor.getColumnIndex("date"));
+                System.out.println(cursor.getCount() + " Gowno " + data);
             }while(cursor.moveToNext());
         }
 

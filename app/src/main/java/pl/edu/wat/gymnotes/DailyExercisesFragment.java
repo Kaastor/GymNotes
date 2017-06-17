@@ -91,8 +91,8 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        todayDate = sdf.format(Calendar.getInstance().getTime());
-//        String todayDate = "11-08-1982";
+//        todayDate = sdf.format(Calendar.getInstance().getTime());
+        String todayDate = "15-06-2017";
 
 
         Uri practicesUri = ExerciseContract.PracticeEntry.buildPracticeForDate(todayDate);
