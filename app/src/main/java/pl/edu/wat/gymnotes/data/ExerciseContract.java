@@ -28,17 +28,19 @@ public class ExerciseContract {
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EXERCISE;
 
         public static final String TABLE_NAME = "exercise";
+        public static final String COLUMN_NAME = "name";
 //        public static final String COLUMN_PICTURE_BEFORE = "pic_before";
 //        public static final String COLUMN_PICTURE_AFTER = "pic_after";
         public static final String COLUMN_DESCRIPTION = "description";
+
 
         public static Uri buildExerciseUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-//        public static Uri buildPracticeForId(String id) {
-//            return CONTENT_URI.buildUpon().appendQueryParameter(_ID, id).build();
-//        }
+        public static Uri buildExerciseForName(String name) {
+            return CONTENT_URI.buildUpon().appendPath(name).build();
+        }
     }
 
 
@@ -61,7 +63,7 @@ public class ExerciseContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildPractiiceForDate(String date) {
+        public static Uri buildPracticeForDate(String date) {
             return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_DATE, date).build();
         }
     }

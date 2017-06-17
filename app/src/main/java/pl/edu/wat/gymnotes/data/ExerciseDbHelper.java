@@ -22,7 +22,8 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final String SQL_CREATE_EXERCISE_TABLE = "CREATE TABLE " + ExerciseEntry.TABLE_NAME + " (" +
                 ExerciseEntry._ID + " INTEGER PRIMARY KEY," +
-                ExerciseEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL " +
+                ExerciseEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
+                ExerciseEntry.COLUMN_NAME + " TEXT NOT NULL " +
                 " );";
 
         final String SQL_CREATE_PRACTICE_TABLE = "CREATE TABLE " + PracticeEntry.TABLE_NAME + " (" +

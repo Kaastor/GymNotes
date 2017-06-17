@@ -101,7 +101,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
         String testDate = "1982-11-08";
         // content://pl.edu.wat.gymnotes.app/practice/"1982-11-08"
         type = mContext.getContentResolver().getType(
-                PracticeEntry.buildPractiiceForDate(testDate));
+                PracticeEntry.buildPracticeForDate(testDate));
         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
         assertEquals("Error: the PracticeEntry CONTENT_URI with location should return PracticeEntry.CONTENT_TYPE",
                 PracticeEntry.CONTENT_TYPE, type);

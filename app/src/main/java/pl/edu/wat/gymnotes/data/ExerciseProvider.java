@@ -16,7 +16,7 @@ public class ExerciseProvider extends ContentProvider{
     private ExerciseDbHelper exerciseDbHelper;
 
     static final int EXERCISE = 100;
-    static final int EXERCISE_FOR_ID = 101;
+    static final int EXERCISE_FOR_NAME = 101;
     static final int PRACTICE = 200;
     static final int PRACTICE_WITH_DATE = 201;
 
@@ -25,7 +25,7 @@ public class ExerciseProvider extends ContentProvider{
         final String authority = ExerciseContract.CONTENT_AUTHORITY;
 
         matcher.addURI(authority, ExerciseContract.PATH_EXERCISE, EXERCISE);
-//        matcher.addURI(authority, ExerciseContract.PATH_EXERCISE + "/*", EXERCISE_FOR_ID);
+        matcher.addURI(authority, ExerciseContract.PATH_EXERCISE + "/*", EXERCISE_FOR_NAME);
 
         matcher.addURI(authority, ExerciseContract.PATH_PRACTICE, PRACTICE);
         matcher.addURI(authority, ExerciseContract.PATH_PRACTICE + "/*", PRACTICE_WITH_DATE);
@@ -79,12 +79,14 @@ public class ExerciseProvider extends ContentProvider{
         switch (match){
             case EXERCISE:
                 return ExerciseContract.ExerciseEntry.CONTENT_TYPE;
+            case EXERCISE_FOR_NAME:
+                return ExerciseContract.ExerciseEntry.CONTENT_ITEM_TYPE;
             case PRACTICE:
                 return ExerciseContract.PracticeEntry.CONTENT_TYPE;
             case PRACTICE_WITH_DATE:
                 return ExerciseContract.PracticeEntry.CONTENT_TYPE;
             default:
-                throw  new UnsupportedOperationException("Unknwn uri:" + uri);
+                throw  new UnsupportedOperationException("Unknown uri:" + uri);
         }
     }
 

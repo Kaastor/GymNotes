@@ -42,20 +42,21 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(mThumbIds[0]);
+        imageView.setImageResource(mThumbIds[position%4]);
         return imageView;
     }
 
     // references to our images
     private Integer[] mThumbIds = {
-            R.drawable.pompka, R.drawable.about,
-            R.drawable.about,R.drawable.about,
-            R.drawable.about,R.drawable.about,
-            R.drawable.about,R.drawable.about,
-            R.drawable.about,R.drawable.about,
-            R.drawable.about,R.drawable.about,
-            R.drawable.about,R.drawable.about,
-            R.drawable.about,R.drawable.about,
-            R.drawable.about,R.drawable.about
+            R.drawable.pompka, R.drawable.przysiad,
+            R.drawable.wspinaczka,R.drawable.brzuszki,
+            R.drawable.pompka, R.drawable.przysiad,
+            R.drawable.wspinaczka,R.drawable.brzuszki,
+            R.drawable.pompka, R.drawable.przysiad,
+            R.drawable.wspinaczka,R.drawable.brzuszki,
+            R.drawable.pompka, R.drawable.przysiad,
+            R.drawable.wspinaczka,R.drawable.brzuszki,
+            R.drawable.pompka, R.drawable.przysiad,
+            R.drawable.wspinaczka,R.drawable.brzuszki
     };
 }
