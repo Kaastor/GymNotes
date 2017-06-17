@@ -1,6 +1,7 @@
 package pl.edu.wat.gymnotes;
 
 
+import android.content.Intent;
 import android.database.MatrixCursor;
 import android.provider.ContactsContract;
 import android.provider.Settings;
@@ -33,6 +34,7 @@ public class DiaryFragment extends Fragment implements LoaderCallbacks<Cursor> {
     private SimpleCursorAdapter mDiaryAdapter;
     private ListView diaryList;
 
+    public static final int COL_PRACTICE_DATE = 1;
 
     public DiaryFragment() {
     }
@@ -58,6 +60,13 @@ public class DiaryFragment extends Fragment implements LoaderCallbacks<Cursor> {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Toast.makeText(getActivity(), "Tutaj szczegoly!", Toast.LENGTH_SHORT).show();
+                SimpleCursorAdapter adapter = (SimpleCursorAdapter) adapterView.getAdapter();
+                Cursor cursor = adapter.getCursor();
+                if(null != cursor && cursor.moveToPosition(position)) {
+                    Intent intent = new Intent(getActivity(), DiaryDetailsActivity.class)
+                            .putExtra("data", cursor.getString(COL_PRACTICE_DATE));
+                    startActivity(intent);
+                }
             }
         });
         return rootView;

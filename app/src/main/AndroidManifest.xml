@@ -12,9 +12,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".DetailActivity"
             android:label="@string/detail_name"
@@ -22,9 +20,7 @@
         <activity
             android:name=".CatalogActivity"
             android:label="@string/catalog_name"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".NavigationActivity"
             android:label="@string/main_site_name"
@@ -38,17 +34,17 @@
         <activity
             android:name=".DiaryActivity"
             android:label="@string/diary_name"
-            android:theme="@style/AppTheme">
-
-        </activity>
-        <activity android:name=".AboutActivity"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".AboutActivity"
             android:label="@string/settings_about"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
 
         <provider
-            android:authorities="pl.edu.wat.gymnotes.app"
-            android:name=".data.ExerciseProvider" />
+            android:name=".data.ExerciseProvider"
+            android:authorities="pl.edu.wat.gymnotes.app" />
+
+        <activity android:name=".DiaryDetailsActivity"></activity>
     </application>
 
 </manifest>
