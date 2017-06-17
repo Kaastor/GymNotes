@@ -147,8 +147,9 @@ public class ExerciseProviderTest extends AndroidTestCase {
         ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        TestUtilities.insertSimpleExerciseValues(mContext);
-        TestUtilities.insertSimpleExerciseValues(mContext);
+        for(int i = 0 ; i < 30 ; i++)
+            TestUtilities.insertSimpleExerciseValues(mContext);
+
 
         // Fantastic.  Now that we have a location, add some weather!
 
@@ -162,7 +163,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
         );
 
         // Make sure we get the correct cursor out of the database
-        assertEquals(exerciseCursor.getCount(), 2);
+        assertEquals(exerciseCursor.getCount(), 30);
 
     }
 

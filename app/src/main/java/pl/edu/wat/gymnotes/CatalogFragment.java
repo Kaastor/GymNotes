@@ -10,6 +10,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
     public static final int COL_EXERCISE_NAME = 1;
     public static final int COL_EXERCISE_DESC = 2;
 
-
+    private SimpleCursorAdapter mExerciseAdapter;
 
     public CatalogFragment() {
 
@@ -51,19 +52,26 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
 
         View rootView = inflater.inflate(R.layout.fragment_grid_catalog, container, false);
 
-
+        mExerciseAdapter = new SimpleCursorAdapter(getActivity(), R.layout.grid_item_exercise, null,
+                new String[]{
+                        ExerciseContract.ExerciseEntry.COLUMN_NAME},
+                new int[]{
+                        R.id.item_gird_exercise
+                },
+                0);
         GridView gridview = (GridView) rootView.findViewById(R.id.exercises_grid_view);
-        gridview.setAdapter(new ImageAdapter(getActivity().getBaseContext()));
+        gridview.setAdapter(mExerciseAdapter);
+//        gridview.setAdapter(new ImageAdapter(getActivity().getBaseContext()));
 
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String info = "Informacje o ćwiczeniu";
-
-                Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, info);
-                startActivity(intent);
+//                String info = "Informacje o ćwiczeniu";
+//
+//                Intent intent = new Intent(getActivity(), DetailActivity.class)
+//                        .putExtra(Intent.EXTRA_TEXT, info);
+//                startActivity(intent);
             }
         });
 
@@ -85,11 +93,11 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+        mExerciseAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        mExerciseAdapter.swapCursor(null);
     }
 }
