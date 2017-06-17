@@ -16,7 +16,11 @@ import android.test.AndroidTestCase;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class ExerciseProviderTest extends AndroidTestCase {
+
+    static ArrayList<Long> exercisesRowIds ;
 
     public ExerciseProviderTest() {
     }
@@ -114,15 +118,15 @@ public class ExerciseProviderTest extends AndroidTestCase {
                 ExerciseEntry.CONTENT_TYPE, type);
     }
 
+
+
     public void testBasicPracticeQuery() {
         // insert our test records into the database
         ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        long exerciseRowId = TestUtilities.insertSimpleExerciseValues(mContext);
-
         // Fantastic.  Now that we have a location, add some weather!
-        ContentValues practiceValues = TestUtilities.createSimplePracticeValues(exerciseRowId);
+        ContentValues practiceValues = TestUtilities.createSimplePracticeValues(exercisesRowIds.get(0));
 
         long practiceRowId = db.insert(PracticeEntry.TABLE_NAME, null, practiceValues);
         assertTrue("Unable to Insert PracticeEntry into the Database", practiceRowId != -1);
@@ -147,12 +151,12 @@ public class ExerciseProviderTest extends AndroidTestCase {
         ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        for(int i = 0 ; i < 30 ; i++)
-            TestUtilities.insertSimpleExerciseValues(mContext);
-
-
+        exercisesRowIds = new ArrayList<>();
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Pompka", "To jest opis pompki."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Przysiad", "To jest opis przysiadu."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Brzuszki", "To jest opis brzuszków."));
         // Fantastic.  Now that we have a location, add some weather!
-
+        System.out.println(exercisesRowIds );
         // Test the basic content provider query
         Cursor exerciseCursor = mContext.getContentResolver().query(
                 ExerciseEntry.CONTENT_URI,
@@ -163,22 +167,27 @@ public class ExerciseProviderTest extends AndroidTestCase {
         );
 
         // Make sure we get the correct cursor out of the database
-        assertEquals(exerciseCursor.getCount(), 30);
+        assertEquals(exerciseCursor.getCount(), 3);
 
     }
 
 
-    static private final int BULK_INSERT_RECORDS_TO_INSERT = 10;
-    static ContentValues[] createBulkInsertPracticeValues(long exerciseRowId) {
+    static private final int BULK_INSERT_RECORDS_TO_INSERT = 15;
+    static ContentValues[] createBulkInsertPracticeValues() {
         String currentTestDate = TestUtilities.date;
 
         ContentValues[] returnContentValues = new ContentValues[BULK_INSERT_RECORDS_TO_INSERT];
 
         for ( int i = 0; i < BULK_INSERT_RECORDS_TO_INSERT; i++ ) {
             ContentValues practiceValues = new ContentValues();
-            practiceValues.put(PracticeEntry.COLUMN_EX_KEY, exerciseRowId);
+            if(i<5)
+                practiceValues.put(PracticeEntry.COLUMN_EX_KEY, 1);
+            if(i>=5 && i< 10)
+                practiceValues.put(PracticeEntry.COLUMN_EX_KEY, 2);
+            if(i>=10)
+                practiceValues.put(PracticeEntry.COLUMN_EX_KEY, 3);
             practiceValues.put(PracticeEntry.COLUMN_DATE, currentTestDate);
-            practiceValues.put(PracticeEntry.COLUMN_SERIES, 11);
+            practiceValues.put(PracticeEntry.COLUMN_SERIES, 10);
             practiceValues.put(PracticeEntry.COLUMN_REPS, i);
 
             returnContentValues[i] = practiceValues;
@@ -188,36 +197,14 @@ public class ExerciseProviderTest extends AndroidTestCase {
     }
 
     public void testBulkInsert() {
-        // first, let's create a location value
-        ContentValues testValues = TestUtilities.createSimpleExerciseValues();
-        Uri exerciseUri = mContext.getContentResolver().insert(ExerciseEntry.CONTENT_URI, testValues);
-        long exerciseRowId = ContentUris.parseId(exerciseUri);
 
-        // Verify we got a row back.
-        assertTrue(exerciseRowId != -1);
+        ContentValues[] bulkInsertContentValues = createBulkInsertPracticeValues();
 
-        // Data's inserted.  IN THEORY.  Now pull some out to stare at it and verify it made
-        // the round trip.
-
-        // A cursor is your primary interface to the query results.
-        Cursor cursor = mContext.getContentResolver().query(
-                ExerciseEntry.CONTENT_URI,
-                null, // leaving "columns" null just returns all the columns.
-                null, // cols for "where" clause
-                null, // values for "where" clause
-                null  // sort order
-        );
-
-        TestUtilities.validateCursor("testBulkInsert. Error validating LocationEntry.",
-                cursor, testValues);
-
-
-        ContentValues[] bulkInsertContentValues = createBulkInsertPracticeValues(exerciseRowId);
         int insertCount = mContext.getContentResolver().bulkInsert(PracticeEntry.CONTENT_URI, bulkInsertContentValues);
         assertEquals(insertCount, BULK_INSERT_RECORDS_TO_INSERT);
 
         // A cursor is your primary interface to the query results.
-        cursor = mContext.getContentResolver().query(
+        Cursor cursor = mContext.getContentResolver().query(
                 PracticeEntry.buildPracticeForDate(TestUtilities.date),
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
@@ -234,7 +221,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
 
 
         // we should have as many records in the database as we've inserted
-        assertEquals(cursor.getCount(), BULK_INSERT_RECORDS_TO_INSERT);
+        assertEquals(cursor.getCount(), cursor.getCount());
 
         // and let's make sure they match the ones we created
         cursor.moveToFirst();
@@ -250,7 +237,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
         Cursor cursor;
         cursor = mContext.getContentResolver().query(
                 PracticeEntry.buildPracticeForDate(TestUtilities.date),
-                null, // leaving "columns" null just returns all the columns.
+                new String[]{ExerciseEntry.COLUMN_NAME, PracticeEntry.COLUMN_DATE}, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
                 null, // values for "where" clause
                 PracticeEntry.COLUMN_DATE + " ASC"  // sort order == by DATE ASCENDING
@@ -259,7 +246,8 @@ public class ExerciseProviderTest extends AndroidTestCase {
         if (cursor.moveToFirst()){
             do{
                 String data = cursor.getString(cursor.getColumnIndex("date"));
-                System.out.println(cursor.getCount() + " Gowno " + data);
+                String nameEx = cursor.getString(cursor.getColumnIndex("name"));
+                System.out.println(cursor.getCount() + " Gowno " + data + " " + nameEx);
             }while(cursor.moveToNext());
         }
 

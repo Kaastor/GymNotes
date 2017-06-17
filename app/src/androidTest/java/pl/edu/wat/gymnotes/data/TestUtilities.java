@@ -18,8 +18,8 @@ import static junit.framework.Assert.assertTrue;
 public class TestUtilities {
 
     static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//    static String date = sdf.format(Calendar.getInstance().getTime());
-    static String date = "11-08-1982";
+    static String date = sdf.format(Calendar.getInstance().getTime());
+//    static String date = "11-08-1982";
 
     static void validateCursor(String error, Cursor valueCursor, ContentValues expectedValues) {
         assertTrue("Empty cursor returned. " + error, valueCursor.moveToFirst());
@@ -41,19 +41,19 @@ public class TestUtilities {
     }
 
 
-    static ContentValues createSimpleExerciseValues(){
+    static ContentValues createSimpleExerciseValues(String name, String description){
 
         ContentValues testValues = new ContentValues();
-        testValues.put(ExerciseContract.ExerciseEntry.COLUMN_NAME, "pompka");
-        testValues.put(ExerciseContract.ExerciseEntry.COLUMN_DESCRIPTION, "To jest opis pompki.");
+        testValues.put(ExerciseContract.ExerciseEntry.COLUMN_NAME, name);
+        testValues.put(ExerciseContract.ExerciseEntry.COLUMN_DESCRIPTION, description);
 
         return testValues;
     }
 
-    static long insertSimpleExerciseValues(Context context) {
+    static long insertSimpleExerciseValues(Context context, String name, String description) {
         ExerciseDbHelper dbHelper = new ExerciseDbHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues testValues = TestUtilities.createSimpleExerciseValues();
+        ContentValues testValues = TestUtilities.createSimpleExerciseValues(name, description);
         long exerciseRowId;
         exerciseRowId = db.insert(ExerciseContract.ExerciseEntry.TABLE_NAME, null, testValues);
 

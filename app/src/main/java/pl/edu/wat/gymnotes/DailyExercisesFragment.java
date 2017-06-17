@@ -31,11 +31,11 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
     String todayDate;
 
     private static final String[] PRACTICE_COLUMNS = {
-            ExerciseContract.PracticeEntry._ID,
-            ExerciseContract.PracticeEntry.COLUMN_DATE,
-            ExerciseContract.PracticeEntry.COLUMN_EX_KEY,
-            ExerciseContract.PracticeEntry.COLUMN_SERIES,
-            ExerciseContract.PracticeEntry.COLUMN_REPS,
+            "p." + ExerciseContract.PracticeEntry._ID,
+            "p." + ExerciseContract.PracticeEntry.COLUMN_DATE,
+            "e." + ExerciseContract.ExerciseEntry.COLUMN_NAME,
+            "p." + ExerciseContract.PracticeEntry.COLUMN_SERIES,
+            "p." + ExerciseContract.PracticeEntry.COLUMN_REPS,
     };
 
     public static final int COL_PRACTICE_ID = 0;
@@ -59,13 +59,11 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
 
         mExerciseAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_exercises, null,
                 new String[]{
-                        ExerciseContract.PracticeEntry.COLUMN_DATE,
-                        ExerciseContract.PracticeEntry.COLUMN_EX_KEY,
+                        ExerciseContract.ExerciseEntry.COLUMN_NAME,
                         ExerciseContract.PracticeEntry.COLUMN_SERIES,
                         ExerciseContract.PracticeEntry.COLUMN_REPS
                 },
                 new int[]{
-                        R.id.list_item_exercises_date,
                         R.id.list_item_exercises_exercise,
                         R.id.list_item_exercises_series,
                         R.id.list_item_exercises_reps
@@ -78,20 +76,7 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
         todayExercisesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getActivity(), "Coś", Toast.LENGTH_SHORT).show();
-//                SimpleCursorAdapter adapter = (SimpleCursorAdapter) adapterView.getAdapter();
-//                Cursor cursor = adapter.getCursor();
-//                if(null != cursor && cursor.moveToPosition(position)){
-//                    String[] practiceDescription = new String[]{
-//                            cursor.getString(COL_PRACTICE_DATE),
-//                            cursor.getString(COL_PRACTICE_EX_KEY),
-//                            cursor.getString(COL_PRACTICE_SERIES),
-//                            cursor.getString(COL_PRACTICE_REPS)
-//                    };
-//                    Intent intent = new Intent(getActivity(), DetailActivity.class)
-//                            .putExtra("practiceDescription", practiceDescription);
-//                    startActivity(intent);
-//                }
+                Toast.makeText(getActivity(), "Dawaj dalej!", Toast.LENGTH_SHORT).show();
             }
         });
         return rootView;
@@ -106,8 +91,8 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//        todayDate = sdf.format(Calendar.getInstance().getTime());
-        String todayDate = "11-08-1982";
+        todayDate = sdf.format(Calendar.getInstance().getTime());
+//        String todayDate = "11-08-1982";
 
 
         Uri practicesUri = ExerciseContract.PracticeEntry.buildPracticeForDate(todayDate);

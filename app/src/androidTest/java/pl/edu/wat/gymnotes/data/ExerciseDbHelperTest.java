@@ -28,7 +28,7 @@ public class ExerciseDbHelperTest extends AndroidTestCase {
         ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        ContentValues testValues = TestUtilities.createSimpleExerciseValues();
+        ContentValues testValues = TestUtilities.createSimpleExerciseValues("Pompka", "Opis.");
 
         exerciseRowId = database.insert(ExerciseContract.ExerciseEntry.TABLE_NAME, null, testValues);
 

@@ -22,12 +22,12 @@ public class ExerciseProvider extends ContentProvider{
         //This is an inner join which looks like
         //weather INNER JOIN location ON weather.location_id = location._id
         sPracticeWithExerciseQueryBuilder.setTables(
-                ExerciseContract.PracticeEntry.TABLE_NAME + " INNER JOIN " +
+                ExerciseContract.PracticeEntry.TABLE_NAME + " AS p INNER JOIN " +
                         ExerciseContract.ExerciseEntry.TABLE_NAME +
-                        " ON " + ExerciseContract.PracticeEntry.TABLE_NAME +
-                        "." + ExerciseContract.PracticeEntry.COLUMN_EX_KEY +
-                        " = " + ExerciseContract.ExerciseEntry.TABLE_NAME +
-                        "." + ExerciseContract.ExerciseEntry._ID);
+                        " AS e ON " +
+                        "p." + ExerciseContract.PracticeEntry.COLUMN_EX_KEY +
+                        " = " +
+                        "e." + ExerciseContract.ExerciseEntry._ID);
     }
 
     static final int EXERCISE = 100;
@@ -219,15 +219,12 @@ public class ExerciseProvider extends ContentProvider{
     }
 
     private static final String sPracticeDateSelection =
-            ExerciseContract.PracticeEntry.TABLE_NAME+
-                    "." + ExerciseContract.PracticeEntry.COLUMN_DATE + " = ? ";
+            "p"+ "." + ExerciseContract.PracticeEntry.COLUMN_DATE + " = ? ";
 
     private Cursor getPracticeByDate(
             Uri uri, String[] projection, String sortOrder) {
         String date = ExerciseContract.PracticeEntry.getDateFromUri(uri);
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(ExerciseContract.PracticeEntry.TABLE_NAME);
-        return queryBuilder.query(exerciseDbHelper.getReadableDatabase(),
+        return sPracticeWithExerciseQueryBuilder.query(exerciseDbHelper.getReadableDatabase(),
                 projection,
                 sPracticeDateSelection,
                 new String[]{date},
