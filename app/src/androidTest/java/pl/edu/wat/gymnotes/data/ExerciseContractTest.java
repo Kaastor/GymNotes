@@ -42,4 +42,18 @@ public class ExerciseContractTest extends AndroidTestCase {
                 "content://pl.edu.wat.gymnotes.app/exercise/Pompki");
 
     }
+
+    @Test
+    public void testBuildExercises() {
+        Uri exerciseUri = ExerciseContract.ExerciseEntry.buildExercises();
+        assertNotNull("Error: Null Uri returned.  You must fill-in buildExercises in " +
+                        "ExerciseContract.",
+                exerciseUri);
+        System.out.println("gowno" + exerciseUri.toString());
+
+        assertEquals("Error: Exercise name Uri doesn't match our expected result",
+                exerciseUri.toString(),
+                "content://pl.edu.wat.gymnotes.app/exercise");
+
+    }
 }

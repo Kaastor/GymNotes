@@ -41,6 +41,10 @@ public class ExerciseContract {
         public static Uri buildExerciseForName(String name) {
             return CONTENT_URI.buildUpon().appendPath(name).build();
         }
+
+        public static Uri buildExercises() {
+            return CONTENT_URI.buildUpon().build();
+        }
     }
 
 

@@ -11,6 +11,7 @@ import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.provider.Settings;
 import android.test.AndroidTestCase;
 
 import org.junit.Test;
@@ -155,6 +156,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
             practiceValues.put(PracticeEntry.COLUMN_REPS, i);
 
             returnContentValues[i] = practiceValues;
+
         }
         return returnContentValues;
     }
@@ -196,6 +198,14 @@ public class ExerciseProviderTest extends AndroidTestCase {
                 null, // values for "where" clause
                 PracticeEntry.COLUMN_DATE + " ASC"  // sort order == by DATE ASCENDING
         );
+
+        if (cursor.moveToFirst()){
+            do{
+                String data = cursor.getString(cursor.getColumnIndex("reps"));
+                System.out.println("Gowno " + data);
+            }while(cursor.moveToNext());
+        }
+
 
         // we should have as many records in the database as we've inserted
         assertEquals(cursor.getCount(), BULK_INSERT_RECORDS_TO_INSERT);
