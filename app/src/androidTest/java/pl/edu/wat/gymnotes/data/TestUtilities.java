@@ -42,6 +42,7 @@ public class TestUtilities {
     static ContentValues createSimpleExerciseValues(){
 
         ContentValues testValues = new ContentValues();
+        testValues.put(ExerciseContract.ExerciseEntry.COLUMN_NAME, "pompka");
         testValues.put(ExerciseContract.ExerciseEntry.COLUMN_DESCRIPTION, "To jest opis pompki.");
 
         return testValues;

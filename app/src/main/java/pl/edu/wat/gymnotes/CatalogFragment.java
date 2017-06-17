@@ -24,7 +24,7 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
     private static final int CATALOG_LOADER = 0;
 
     private static final String[] EXERCISE_COLUMNS = {
-            ExerciseContract.ExerciseEntry.TABLE_NAME + ExerciseContract.ExerciseEntry._ID,
+            ExerciseContract.ExerciseEntry._ID,
             ExerciseContract.ExerciseEntry.COLUMN_NAME,
             ExerciseContract.ExerciseEntry.COLUMN_DESCRIPTION
     };

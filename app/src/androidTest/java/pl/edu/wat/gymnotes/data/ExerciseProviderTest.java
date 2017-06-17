@@ -142,6 +142,31 @@ public class ExerciseProviderTest extends AndroidTestCase {
     }
 
 
+    public void testBasicExerciseQuery() {
+        // insert our test records into the database
+        ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        TestUtilities.insertSimpleExerciseValues(mContext);
+        TestUtilities.insertSimpleExerciseValues(mContext);
+
+        // Fantastic.  Now that we have a location, add some weather!
+
+        // Test the basic content provider query
+        Cursor exerciseCursor = mContext.getContentResolver().query(
+                ExerciseEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        // Make sure we get the correct cursor out of the database
+        assertEquals(exerciseCursor.getCount(), 2);
+
+    }
+
+
     static private final int BULK_INSERT_RECORDS_TO_INSERT = 10;
     static ContentValues[] createBulkInsertPracticeValues(long exerciseRowId) {
         String currentTestDate = TestUtilities.date;
@@ -218,5 +243,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
         }
         cursor.close();
     }
+
+
 
 }
