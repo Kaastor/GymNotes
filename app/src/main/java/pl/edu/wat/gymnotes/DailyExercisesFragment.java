@@ -1,11 +1,9 @@
 package pl.edu.wat.gymnotes;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
@@ -63,10 +60,10 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               new AddTrainingDialog().show(getFragmentManager(), "add");
             }
         });
+
         mExerciseAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_exercises, null,
                 new String[]{
                         ExerciseContract.ExerciseEntry.COLUMN_NAME,

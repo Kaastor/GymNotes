@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array
+        name="exercises">
+        <item>Pompka</item>
+        <item>Brzuszki</item>
+        <item>Przysiad</item>
+    </array>
+</resources>
