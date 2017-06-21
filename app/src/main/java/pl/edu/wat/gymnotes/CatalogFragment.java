@@ -74,6 +74,7 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
                 Cursor cursor = adapter.getCursor();
                 if(null != cursor && cursor.moveToPosition(position)){
                     String[] exerciseDescription = new String[]{
+                            cursor.getString(COL_EXERCISE_ID),
                             cursor.getString(COL_EXERCISE_NAME),
                             cursor.getString(COL_EXERCISE_DESC)
                     };

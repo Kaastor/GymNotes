@@ -9,28 +9,47 @@
     tools:context=".DetailFragment"
     tools:showIn="@layout/activity_detail">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        app:srcCompat="@drawable/pompka" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/detail_name_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:elevation="5dp"
-        android:gravity="center_horizontal" />
+            <ImageView
+                android:id="@+id/detail_exercise_before"
+                android:layout_width="220dp"
+                android:layout_height="299dp"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:paddingTop="@dimen/activity_horizontal_margin"
+                android:scaleType="fitXY"
+                android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:id="@+id/detail_desc_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+            <ImageView
+                android:id="@+id/detail_exercise_after"
+                android:layout_width="231dp"
+                android:layout_height="297dp"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:paddingTop="@dimen/activity_horizontal_margin"
+                android:scaleType="fitXY"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/detail_name_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:elevation="5dp"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/detail_desc_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

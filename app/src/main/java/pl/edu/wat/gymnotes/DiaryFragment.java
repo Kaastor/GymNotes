@@ -3,8 +3,6 @@ package pl.edu.wat.gymnotes;
 
 import android.content.Intent;
 import android.database.MatrixCursor;
-import android.provider.ContactsContract;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.database.Cursor;
 import android.net.Uri;
@@ -20,10 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
@@ -59,7 +53,6 @@ public class DiaryFragment extends Fragment implements LoaderCallbacks<Cursor> {
         diaryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getActivity(), "Tutaj szczegoly!", Toast.LENGTH_SHORT).show();
                 SimpleCursorAdapter adapter = (SimpleCursorAdapter) adapterView.getAdapter();
                 Cursor cursor = adapter.getCursor();
                 if(null != cursor && cursor.moveToPosition(position)) {

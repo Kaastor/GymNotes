@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 public class ImageAdapter extends BaseAdapter {
@@ -49,14 +48,14 @@ public class ImageAdapter extends BaseAdapter {
     // references to our images
     private Integer[] mThumbIds = {
             R.drawable.pompka, R.drawable.przysiad,
-            R.drawable.wspinaczka,R.drawable.brzuszki,
+            R.drawable.wspinaczka,R.drawable.after_1,
             R.drawable.pompka, R.drawable.przysiad,
-            R.drawable.wspinaczka,R.drawable.brzuszki,
+            R.drawable.wspinaczka,R.drawable.after_1,
             R.drawable.pompka, R.drawable.przysiad,
-            R.drawable.wspinaczka,R.drawable.brzuszki,
+            R.drawable.wspinaczka,R.drawable.after_1,
             R.drawable.pompka, R.drawable.przysiad,
-            R.drawable.wspinaczka,R.drawable.brzuszki,
+            R.drawable.wspinaczka,R.drawable.after_1,
             R.drawable.pompka, R.drawable.przysiad,
-            R.drawable.wspinaczka,R.drawable.brzuszki
+            R.drawable.wspinaczka,R.drawable.after_1
     };
 }

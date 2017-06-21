@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/header" />
+        app:srcCompat="@drawable/after_1" />
 
 </LinearLayout>

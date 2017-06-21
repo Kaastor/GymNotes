@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -57,6 +59,14 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
 
         View rootView = inflater.inflate(R.layout.fragment_list_main, container, false);
 
+        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         mExerciseAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_exercises, null,
                 new String[]{
                         ExerciseContract.ExerciseEntry.COLUMN_NAME,
