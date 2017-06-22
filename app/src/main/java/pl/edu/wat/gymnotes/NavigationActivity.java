@@ -101,8 +101,7 @@ public class NavigationActivity extends BaseActivity {
                 break;
 
             case R.id.nav_third_activity:
-                intent = new Intent(this, DiaryActivity.class);
-                startActivity(intent);
+                new DiaryCalendarDialog().show(getSupportFragmentManager(), "datePicker");
                 break;
             default:
                 fragmentClass = DailyExercisesFragment.class;

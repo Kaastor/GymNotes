@@ -6,6 +6,5 @@
     tools:context="pl.edu.wat.gymnotes.DiaryActivity">
 
     <include layout="@layout/app_toolbar" />
-    <include layout="@layout/fragment_diary" />
 
 </android.support.constraint.ConstraintLayout>
