@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
@@ -98,11 +99,15 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getLoaderManager().restartLoader(DAILY_EXERCISE_LOADER, null, this);
+    }
+
+    @Override
     public Loader onCreateLoader(int id, Bundle args) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//        todayDate = sdf.format(Calendar.getInstance().getTime());
-        String todayDate = "15-06-2017";
-
+        todayDate = sdf.format(Calendar.getInstance().getTime());
 
         Uri practicesUri = ExerciseContract.PracticeEntry.buildPracticeForDate(todayDate);
         return new CursorLoader(
