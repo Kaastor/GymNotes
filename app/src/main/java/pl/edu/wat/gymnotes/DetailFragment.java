@@ -37,8 +37,8 @@ public class DetailFragment extends Fragment {
             viewAfter.setImageResource(getResources().getIdentifier(imageAfter, "drawable", getContext().getPackageName()));
             viewAfter.setImageResource(getResources().getIdentifier(imageAfter, "drawable", getContext().getPackageName()));
 
-            ((TextView) rootView.findViewById(R.id.detail_name_text)).setText(exerciseInfo[0]);
-            ((TextView) rootView.findViewById(R.id.detail_desc_text)).setText(exerciseInfo[1]);
+            ((TextView) rootView.findViewById(R.id.detail_name_text)).setText(exerciseInfo[1]);
+            ((TextView) rootView.findViewById(R.id.detail_desc_text)).setText(exerciseInfo[2]);
         }
         return rootView;
     }
