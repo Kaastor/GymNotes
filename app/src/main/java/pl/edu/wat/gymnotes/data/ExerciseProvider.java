@@ -35,6 +35,7 @@ public class ExerciseProvider extends ContentProvider{
     static final int PRACTICE = 200;
     static final int PRACTICE_WITH_DATE = 201;
     static final int PRACTICE_DISTINCT = 202;
+    static final int PRACTICE_WITH_ID = 203;
 
     static UriMatcher buildUriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -46,6 +47,7 @@ public class ExerciseProvider extends ContentProvider{
         matcher.addURI(authority, ExerciseContract.PATH_PRACTICE, PRACTICE);
         matcher.addURI(authority, ExerciseContract.PATH_PRACTICE + "/*", PRACTICE_WITH_DATE);
         matcher.addURI(authority, ExerciseContract.PATH_DIST_PRACTICE , PRACTICE_DISTINCT);
+        matcher.addURI(authority, ExerciseContract.PATH_DEL_PRACTICE + "/*", PRACTICE_WITH_ID);
 
         return matcher;
     }
@@ -108,6 +110,8 @@ public class ExerciseProvider extends ContentProvider{
                 return ExerciseContract.PracticeEntry.CONTENT_TYPE;
             case PRACTICE_WITH_DATE:
                 return ExerciseContract.PracticeEntry.CONTENT_TYPE;
+            case PRACTICE_WITH_ID:
+                return ExerciseContract.PracticeEntry.CONTENT_ITEM_TYPE;
             default:
                 throw  new UnsupportedOperationException("Unknown uri:" + uri);
         }
@@ -157,6 +161,9 @@ public class ExerciseProvider extends ContentProvider{
             case PRACTICE:
                 rowsDeleted = database.delete(
                         ExerciseContract.PracticeEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case PRACTICE_WITH_ID:
+                rowsDeleted = deletePracticeById(new String[]{uri.getLastPathSegment()});
                 break;
             case EXERCISE:
                 rowsDeleted = database.delete(
@@ -254,6 +261,14 @@ public class ExerciseProvider extends ContentProvider{
                 null,
                 null,
                 sortOrder
+        );
+    }
+
+    private int deletePracticeById(String[] id){
+        return getContext().getContentResolver().delete(
+                ExerciseContract.PracticeEntry.CONTENT_URI,
+                "_ID=?",
+                id
         );
     }
 }

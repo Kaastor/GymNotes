@@ -18,7 +18,7 @@ public class ExerciseContract {
     public static final String PATH_PRACTICE = "practice";
 
     public static final String PATH_DIST_PRACTICE = "distinctPractice";
-
+    public static final String PATH_DEL_PRACTICE = "distinctPractice";
 
     public static final class ExerciseEntry implements BaseColumns{
 
@@ -55,6 +55,9 @@ public class ExerciseContract {
         public static final Uri CONTENT_DIST_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_DIST_PRACTICE).build();
 
+        public static final Uri CONTENT_DEL_URI = BASE_CONTENT_URI.
+                buildUpon().appendPath(PATH_DEL_PRACTICE).build();
+
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_PRACTICE).build();
         public static final String CONTENT_TYPE =
@@ -77,7 +80,7 @@ public class ExerciseContract {
         }
 
         public static Uri buildPracticeForId(String id) {
-            return CONTENT_URI.buildUpon().appendPath(id).build();
+            return CONTENT_DEL_URI.buildUpon().appendPath(id).build();
         }
 
         public static Uri buildPractices() {

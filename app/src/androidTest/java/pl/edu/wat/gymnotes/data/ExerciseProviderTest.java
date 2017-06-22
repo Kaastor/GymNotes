@@ -72,15 +72,10 @@ public class ExerciseProviderTest extends AndroidTestCase {
     @Test
     public void testDeleteFromPractices(){
         // insert our test records into the database
-        ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        long practiceRowId = 1;
-
         // Test the basic content provider query
-        db.delete(
-                ExerciseEntry.TABLE_NAME,
-                Long.toString(practiceRowId),
+        mContext.getContentResolver().delete(
+                PracticeEntry.buildPracticeForId("4"),
+                null,
                 null
         );
 
