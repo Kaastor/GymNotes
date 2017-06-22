@@ -149,9 +149,12 @@ public class ExerciseProviderTest extends AndroidTestCase {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         exercisesRowIds = new ArrayList<>();
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Pompka", "To jest opis pompki."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Przysiad", "To jest opis przysiadu."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Brzuszki", "To jest opis brzuszków."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wyciskanie2", "To jest opis Wyciskanie."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Podskoki2", "To jest opis Podskoki."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wyciąg2", "To jest opis Wyciąg."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Dipy2", "To jest opis Dipy."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wykrok2", "To jest opis wykroku."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wspinaczka2", "To jest opis wspinaczki."));
         // Fantastic.  Now that we have a location, add some weather!
         System.out.println(exercisesRowIds );
         // Test the basic content provider query

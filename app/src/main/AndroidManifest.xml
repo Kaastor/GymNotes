@@ -22,6 +22,10 @@
             android:label="@string/catalog_name"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".AddTrainingActivity"
+            android:label="@string/add_exercise"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".NavigationActivity"
             android:label="@string/main_site_name"
             android:theme="@style/AppTheme">

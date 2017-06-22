@@ -6,6 +6,7 @@
     <string name="catalog_name">Katalog</string>
     <string name="diary_name">Dziennik</string>
     <string name="main_site_name">GymNotes</string>
+    <string name="add_exercise">Dodaj ćwiczenie</string>
 
     <string name="drawer_first">Katalog</string>
     <string name="drawer_second">Trening</string>

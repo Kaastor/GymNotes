@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/fragment_add_training_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:showIn="@layout/activity_add_training"
+        tools:context="pl.edu.wat.gymnotes.AddTrainingFragment">
+
+    <Button
+        android:id="@+id/dialog_choose_exercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_marginTop="86dp"
+        android:background="@color/colorPrimary"
+        android:text="Wybierz ćwiczenie"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/dialog_add_series_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:paddingTop="25dp"
+        android:text="SERIE:"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <EditText
+        android:id="@+id/dialog_add_series"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="number"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/dialog_add_reps_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:paddingTop="25dp"
+        android:text="POWTÓRZENIA:"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/dialog_add_reps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="number"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/dialog_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:clickable="true"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:text="ZAPISZ ĆWICZENIE"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    </LinearLayout>

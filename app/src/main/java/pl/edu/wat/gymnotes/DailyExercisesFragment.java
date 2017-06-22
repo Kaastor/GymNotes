@@ -1,5 +1,6 @@
 package pl.edu.wat.gymnotes;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -60,7 +61,8 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               new AddTrainingDialog().show(getFragmentManager(), "add");
+                Intent intent = new Intent(getActivity(), AddTrainingActivity.class);
+                startActivity(intent);
             }
         });
 
