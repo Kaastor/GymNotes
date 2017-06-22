@@ -11,7 +11,7 @@
     <string name="drawer_first">Katalog</string>
     <string name="drawer_second">Trening</string>
     <string name="drawer_third">Dziennik</string>
-    <string name="drawer_header">Użytkownik/data</string>
+    <string name="drawer_header">Użytkownik</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 

@@ -99,7 +99,6 @@ public class NavigationActivity extends BaseActivity {
                 Intent intent = new Intent(this, CatalogActivity.class);
                 startActivity(intent);
                 break;
-
             case R.id.nav_third_activity:
                 new DiaryCalendarDialog().show(getSupportFragmentManager(), "datePicker");
                 break;
@@ -114,9 +113,6 @@ public class NavigationActivity extends BaseActivity {
         // Insert the fragment by replacing any existing fragment
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
-        // Highlight the selected item has been done by NavigationView
-//        currentMenuItem.setChecked(true);
-        // Close the navigation drawer
         mDrawer.closeDrawers();
     }
 

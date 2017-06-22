@@ -52,16 +52,16 @@ public class DiaryDetailsFragment extends Fragment implements LoaderManager.Load
 
         View rootView = inflater.inflate(R.layout.fragment_list_diary_details, container, false);
 
-        mDiaryDetailsAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_dairy_details, null,
+        mDiaryDetailsAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_exercises, null,
                 new String[]{
                         ExerciseContract.ExerciseEntry.COLUMN_NAME,
                         ExerciseContract.PracticeEntry.COLUMN_SERIES,
                         ExerciseContract.PracticeEntry.COLUMN_REPS
                 },
                 new int[]{
-                        R.id.list_item_dairy_exercise,
-                        R.id.list_item_dairy_series,
-                        R.id.list_item_dairy_reps
+                        R.id.list_item_exercises_exercise,
+                        R.id.list_item_exercises_series,
+                        R.id.list_item_exercises_reps
                 },
                 0
         );
