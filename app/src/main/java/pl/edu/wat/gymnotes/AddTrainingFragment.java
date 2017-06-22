@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
-import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -32,7 +31,7 @@ public class AddTrainingFragment extends Fragment implements LoaderManager.Loade
 
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     private String todayDate = sdf.format(Calendar.getInstance().getTime());
-    private AlertDialog.Builder builder;
+
     private View rootView;
     private DialogFragment chooseExercise;
     private static final int ADD_TRAINING_LOADER = 0;
@@ -40,7 +39,7 @@ public class AddTrainingFragment extends Fragment implements LoaderManager.Loade
 
     private EditText series;
     private EditText reps;
-    private int newEntryExerciseId;
+    private int newEntryExerciseId = 0;
     private int newEntrySeries;
     private int newEntryReps;
     private String newEntryDate = todayDate;
@@ -63,7 +62,6 @@ public class AddTrainingFragment extends Fragment implements LoaderManager.Loade
         getExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "WYBIERZ!", Toast.LENGTH_SHORT).show();
                 chooseExercise.show(getFragmentManager(), "choose");
             }
         });
@@ -136,10 +134,6 @@ public class AddTrainingFragment extends Fragment implements LoaderManager.Loade
         practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_REPS, newEntryReps);
 
         db.insert(ExerciseContract.PracticeEntry.TABLE_NAME, null, practiceValues);
-    }
-
-    private void discardEntryTrainingToDB(){
-
     }
 }
 

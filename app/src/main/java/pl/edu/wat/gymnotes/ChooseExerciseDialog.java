@@ -53,9 +53,9 @@ public class ChooseExerciseDialog extends DialogFragment implements LoaderManage
 //        builder.setView(view);
         builder.setTitle("Dodaj ćwiczenie");
         builder
-                .setSingleChoiceItems(exercisesArray, 1, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(exercisesArray, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        newEntryExerciseId = which;
+                        newEntryExerciseId = which+1; //id in database from 0
                         Intent intent = new Intent();
                         intent.putExtra("newEntryExerciseId", Integer.toString(newEntryExerciseId));
                         getTargetFragment().onActivityResult(

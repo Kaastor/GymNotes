@@ -89,6 +89,13 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
                 Toast.makeText(getActivity(), "Dawaj dalej!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        todayExercisesList.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                return false;
+            }
+        });
         return rootView;
     }
 

@@ -76,6 +76,10 @@ public class ExerciseContract {
             return CONTENT_URI.buildUpon().appendPath(date).build();
         }
 
+        public static Uri buildPracticeForId(String id) {
+            return CONTENT_URI.buildUpon().appendPath(id).build();
+        }
+
         public static Uri buildPractices() {
             return CONTENT_URI.buildUpon().build();
         }

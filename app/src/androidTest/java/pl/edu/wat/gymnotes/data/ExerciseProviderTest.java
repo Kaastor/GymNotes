@@ -70,6 +70,24 @@ public class ExerciseProviderTest extends AndroidTestCase {
     }
 
     @Test
+    public void testDeleteFromPractices(){
+        // insert our test records into the database
+        ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        long practiceRowId = 1;
+
+        // Test the basic content provider query
+        db.delete(
+                ExerciseEntry.TABLE_NAME,
+                Long.toString(practiceRowId),
+                null
+        );
+
+        // Make sure we get the correct cursor out of the database
+    }
+
+    @Test
     public void testProviderRegistry() {
         PackageManager pm = mContext.getPackageManager();
 
@@ -149,12 +167,12 @@ public class ExerciseProviderTest extends AndroidTestCase {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         exercisesRowIds = new ArrayList<>();
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wyciskanie2", "To jest opis Wyciskanie."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Podskoki2", "To jest opis Podskoki."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wyciąg2", "To jest opis Wyciąg."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Dipy2", "To jest opis Dipy."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wykrok2", "To jest opis wykroku."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wspinaczka2", "To jest opis wspinaczki."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wyciskanie", "To jest opis Wyciskanie."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Podskoki", "To jest opis Podskoki."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wyciąg", "To jest opis Wyciąg."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Dipy", "To jest opis Dipy."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wykrok", "To jest opis wykroku."));
+        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wspinaczka", "To jest opis wspinaczki."));
         // Fantastic.  Now that we have a location, add some weather!
         System.out.println(exercisesRowIds );
         // Test the basic content provider query
@@ -167,7 +185,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
         );
 
         // Make sure we get the correct cursor out of the database
-        assertEquals(exerciseCursor.getCount(), 3);
+        assertEquals(exerciseCursor.getCount(), 6);
 
     }
 
