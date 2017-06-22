@@ -17,7 +17,7 @@
         android:layout_marginRight="@dimen/activity_vertical_margin"
         android:layout_marginTop="86dp"
         android:background="@color/colorPrimary"
-        android:text="Wybierz ćwiczenie"
+        android:text="@string/fragment_add_training_view_choose"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -28,7 +28,7 @@
         android:ems="10"
         android:gravity="center"
         android:paddingTop="25dp"
-        android:text="SERIE:"
+        android:text="@string/fragment_add_training_view_series"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="visible" />
@@ -49,7 +49,7 @@
         android:ems="10"
         android:gravity="center"
         android:paddingTop="25dp"
-        android:text="POWTÓRZENIA:"
+        android:text="@string/fragment_add_training_view_reps"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -71,7 +71,7 @@
         android:layout_marginRight="@dimen/activity_vertical_margin"
         android:layout_marginTop="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:text="ZAPISZ ĆWICZENIE"
+        android:text="@string/fragment_add_training_view_save"
         android:textSize="20sp"
         android:textStyle="bold" />
     </LinearLayout>

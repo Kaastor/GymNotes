@@ -33,7 +33,7 @@
         android:gravity="center"
         android:textSize="18sp"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:text="Serie: "
+        android:text="@string/list_item_exercises_series"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_item_exercises_exercise" />
@@ -63,7 +63,7 @@
         android:layout_toEndOf="@+id/list_item_exercises_series"
         android:gravity="center"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:text="Powtórzenia: "
+        android:text="@string/list_item_exercises_reps"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/list_item_exercises_series"
         app:layout_constraintTop_toBottomOf="@+id/list_item_exercises_exercise" />

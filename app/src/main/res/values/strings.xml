@@ -21,4 +21,11 @@
     <string name="about_version"><b>Wersja:</b>\n GymNotes, wersja 1.0</string>
     <string name="action_settings">Settings</string>
     <string name="menu_delete">Usuń</string>
+
+    <string name="list_item_exercises_series">Serie: </string>
+    <string name="list_item_exercises_reps">Powtórzenia: </string>
+    <string name="fragment_add_training_view_choose">Wybierz ćwiczenie</string>
+    <string name="fragment_add_training_view_series">SERIE:</string>
+    <string name="fragment_add_training_view_reps">POWTÓRZENIA:</string>
+    <string name="fragment_add_training_view_save">ZAPISZ ĆWICZENIE</string>
 </resources>
