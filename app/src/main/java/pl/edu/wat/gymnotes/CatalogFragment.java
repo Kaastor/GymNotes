@@ -64,8 +64,6 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
         GridView gridview = (GridView) rootView.findViewById(R.id.exercises_grid_view);
 
         gridview.setAdapter(mExerciseAdapter);
-//        gridview.setAdapter(new ImageAdapter(getActivity().getBaseContext()));
-
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

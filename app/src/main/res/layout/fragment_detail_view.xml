@@ -57,7 +57,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textColor="@color/colorPrimaryDark"/>
 
             <TextView
@@ -72,7 +72,7 @@
                 android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:textColor="@color/colorAccent"
-                android:textSize="15sp"/>
+                android:textSize="18sp"/>
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
