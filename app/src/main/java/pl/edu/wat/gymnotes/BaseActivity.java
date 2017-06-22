@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -49,5 +50,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public MenuInflater getMenuInflater() {
+        return new MenuInflater(this);
+    }
+
 
 }

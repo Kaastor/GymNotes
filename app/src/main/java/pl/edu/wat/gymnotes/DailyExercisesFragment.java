@@ -10,7 +10,10 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -90,12 +93,18 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
             }
         });
 
-        todayExercisesList.setOnLongClickListener(new View.OnLongClickListener() {
+        todayExercisesList.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
-            public boolean onLongClick(View view) {
-                return false;
+            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                DailyExercisesFragment.super.onCreateContextMenu(contextMenu, view, contextMenuInfo);
+                Toast.makeText(getActivity(), "menu!", Toast.LENGTH_SHORT).show();
+                if (view.getId()==R.id.list_view_exercises) {
+                    MenuInflater inflater = getActivity().getMenuInflater();
+                    inflater.inflate(R.menu.menu_exercise_entry, contextMenu);
+                }
             }
         });
+
         return rootView;
     }
 
@@ -135,5 +144,22 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
     @Override
     public void onLoaderReset(Loader loader) {
         mExerciseAdapter.swapCursor(null);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()) {
+            case R.id.delete:
+                getContext().getContentResolver().delete(
+                        ExerciseContract.PracticeEntry.buildPracticeForId(Long.toString(info.id)),
+                        null,
+                        null
+                );
+                this.onResume();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }

@@ -44,13 +44,8 @@ public class ChooseExerciseDialog extends DialogFragment implements LoaderManage
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-//        View view = inflater.inflate(R.layout.dialog_add_training, null);
         builder = new AlertDialog.Builder(getActivity());
-
         getLoaderManager().initLoader(EXERCISE_CHOOSER_LOADER, null, this);
-
-//        builder.setView(view);
         builder.setTitle("Dodaj ćwiczenie");
         builder
                 .setSingleChoiceItems(exercisesArray, 0, new DialogInterface.OnClickListener() {
@@ -63,14 +58,13 @@ public class ChooseExerciseDialog extends DialogFragment implements LoaderManage
                     }
                 });
 
-
         return builder.create();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(EXERCISE_CHOOSER_LOADER, null, this);
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        exercisesList.clear();
     }
 
     @Override

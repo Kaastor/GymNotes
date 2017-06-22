@@ -5,7 +5,7 @@
     <string name="detail_name">Opis</string>
     <string name="catalog_name">Katalog</string>
     <string name="diary_name">Dziennik</string>
-    <string name="main_site_name">GymNotes</string>
+    <string name="main_site_name">Dzisiejsze GymNotes</string>
     <string name="add_exercise">Dodaj ćwiczenie</string>
 
     <string name="drawer_first">Katalog</string>
@@ -19,6 +19,6 @@
     <string name="about_mail"><b>Mail:</b> \npracowite.s@gmail.com</string>
     <string name="about_about"><b>O programie:</b>\nAplikacja trenigowa</string>
     <string name="about_version"><b>Wersja:</b>\n GymNotes, wersja 1.0</string>
-    about_about
     <string name="action_settings">Settings</string>
+    <string name="menu_delete">Usuń</string>
 </resources>
