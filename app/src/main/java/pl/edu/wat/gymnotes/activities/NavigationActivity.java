@@ -15,8 +15,8 @@ import android.widget.TextView;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import pl.edu.wat.gymnotes.DailyExercisesFragment;
-import pl.edu.wat.gymnotes.DiaryCalendarDialog;
+import pl.edu.wat.gymnotes.fragments.DailyExercisesFragment;
+import pl.edu.wat.gymnotes.fragments.DiaryCalendarDialog;
 import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
 
@@ -34,8 +34,7 @@ public class NavigationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        logger.log(Level.INFO, this.getLocalClassName() + " Created.");
+        logger.log(Level.INFO, "onCreate");
 
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
@@ -106,14 +105,18 @@ public class NavigationActivity extends BaseActivity {
             case R.id.nav_first_activity:
                 Intent intent = new Intent(this, CatalogActivity.class);
                 startActivity(intent);
+                logger.log(Level.INFO, "Send intent to CatalogActivity");
                 break;
             case R.id.nav_third_activity:
                 new DiaryCalendarDialog().show(getSupportFragmentManager(), "datePicker");
+                logger.log(Level.INFO, "Showed DatePicker for DiaryCalendarDialog");
                 break;
             case R.id.nav_forth_activity:
                 logout();
                 startActivity(new Intent(this, LoginActivity.class));
+                logger.log(Level.INFO, "Send intent to LoginActivity");
                 this.finish();
+                logger.log(Level.INFO, "finished");
                 break;
             default:
                 fragmentClass = DailyExercisesFragment.class;
@@ -132,10 +135,12 @@ public class NavigationActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        logger.log(Level.INFO, "onRestart");
         nvDrawer.getMenu().getItem(MAIN_SITE_MENU_INDEX).setChecked(true);
     }
 
     private void logout(){
+        logger.log(Level.INFO, "sharedPreferences cleared");
         getApplicationContext().getSharedPreferences("userLogin",
                 MODE_PRIVATE).edit().putString("userEmail", "").apply();
     }

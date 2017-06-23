@@ -32,6 +32,8 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
@@ -40,6 +42,8 @@ import pl.edu.wat.gymnotes.util.InputValidation;
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private Logger logger = Logger.getLogger(LoginActivity.class.toString());
 
     public static String activeUserEmail;
     private static final int REQUEST_READ_CONTACTS = 0;
@@ -60,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        logger.log(Level.INFO, "onCreate");
 
         setContentView(R.layout.activity_login);
         initLayouts();
@@ -75,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
+                logger.log(Level.INFO, "Send intent to RegisterActivity");
             }
         });
 
@@ -98,11 +104,13 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = validation.loginFieldsValidation(mEmailView, mPasswordView);
 
         if (focusView != null) {
+            logger.log(Level.WARNING, "Fields was filled wrong");
             // There was an error
             focusView.requestFocus();
         } else {
             focusView = validation.userLoginValidation(mEmailView, mPasswordView);
             if(focusView == null) {
+                logger.log(Level.INFO, "User logged in successfully");
                 onLogInActions();
 //                mAuthTask = new UserLoginTask(validation.getEmail(), validation.getPassword());
 //                mAuthTask.execute((Void) null);
@@ -123,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NavigationActivity.class);
         startActivity(intent);
         this.finish();
+        logger.log(Level.INFO, "finished");
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -140,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void hideKeyboard(){
+        logger.log(Level.INFO, "Keyboard hidden");
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
     }

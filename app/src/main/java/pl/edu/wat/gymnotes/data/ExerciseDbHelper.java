@@ -11,7 +11,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class ExerciseDbHelper extends SQLiteOpenHelper {
+
+    private Logger logger = Logger.getLogger(ExerciseDbHelper.class.toString());
 
     private static final int DATABASE_VERSION = 1;
     static final String DATABASE_NAME = "gymnotes.db";
@@ -63,6 +68,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
     }
 
     public void addUser(User user){
+        logger.log(Level.INFO, "addUser: " + user );
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(UserEntry.COLUMN_NAME, user.getName());
@@ -73,6 +79,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         database.close();
     }
     public boolean checkUser(String email){
+        logger.log(Level.INFO, "checkUser: " + email );
         String[] columns = {
                 UserEntry._ID
         };
@@ -94,6 +101,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
     }
 
     public String getUserId(String email){
+        logger.log(Level.INFO, "getUserId: " + email );
         String userId = "";
         String[] columns = {
                 UserEntry._ID, UserEntry.COLUMN_EMAIL
@@ -116,6 +124,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
     }
 
     public String getUserName(String email){
+        logger.log(Level.INFO, "getUserName: " + email );
         String userName = "";
         String[] columns = {
                 UserEntry._ID, UserEntry.COLUMN_NAME
@@ -141,6 +150,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
     }
 
     public boolean checkUser(String email, String password){
+        logger.log(Level.INFO, "checkUser: " + email + " " + password );
         String[] columns = {
                 UserEntry._ID
         };

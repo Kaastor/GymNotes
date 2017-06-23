@@ -1,4 +1,4 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.fragments;
 
 import android.content.Intent;
 import android.media.Image;
@@ -11,9 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import pl.edu.wat.gymnotes.R;
+
 
 public class DetailFragment extends Fragment {
 
+    private Logger logger = Logger.getLogger(DetailFragment.class.toString());
 
     public DetailFragment() {
     }
@@ -25,6 +31,9 @@ public class DetailFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         if(intent != null ){
             String[] exerciseInfo = intent.getStringArrayExtra("exerciseDescription");
+
+            logger.log(Level.INFO, "create view for exercise: " + exerciseInfo[0]);
+
             String imageBefore = "before_" + exerciseInfo[0] ;
             String imageAfter =  "after_" + exerciseInfo[0] ;
             Toast.makeText(getActivity(), exerciseInfo[0], Toast.LENGTH_SHORT).show();

@@ -1,4 +1,4 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -8,13 +8,20 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import pl.edu.wat.gymnotes.activities.DiaryDetailsActivity;
 
 
 public class DiaryCalendarDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
+    private Logger logger = Logger.getLogger(DiaryCalendarDialog.class.toString());
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        logger.log(Level.INFO, "onCreateDialog");
+
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
@@ -33,6 +40,8 @@ public class DiaryCalendarDialog extends DialogFragment implements DatePickerDia
         Intent intent = new Intent(getActivity(), DiaryDetailsActivity.class)
                 .putExtra("data", data);
         startActivity(intent);
+        logger.log(Level.INFO, "Send intetnt to DiaryDetailsActivity. Chosen date: " + data);
+
     }
 
 }

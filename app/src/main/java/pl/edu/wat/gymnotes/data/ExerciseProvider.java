@@ -11,7 +11,14 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import pl.edu.wat.gymnotes.activities.AboutActivity;
+
 public class ExerciseProvider extends ContentProvider{
+
+    private Logger logger = Logger.getLogger(ExerciseProvider.class.toString());
 
     public static final UriMatcher sUriMatcher = buildUriMatcher();
     private ExerciseDbHelper exerciseDbHelper;
@@ -66,6 +73,8 @@ public class ExerciseProvider extends ContentProvider{
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs,
                         @Nullable String sortOrder) {
+        logger.log(Level.INFO, "query: uri: " + uri + " projection: " + projection + " selection: " + selection + " selectionArgs:" + selectionArgs
+                + " sortOrder: " + sortOrder);
         Cursor retCursor = null;
         switch (sUriMatcher.match(uri)){
             case EXERCISE:
@@ -124,6 +133,7 @@ public class ExerciseProvider extends ContentProvider{
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
+        logger.log(Level.INFO, "insert: uri: " + uri + " concentValues: " + contentValues);
         final SQLiteDatabase database = exerciseDbHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
@@ -156,6 +166,7 @@ public class ExerciseProvider extends ContentProvider{
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+        logger.log(Level.INFO, "delete: uri: " + uri + " selection: " + selection + " selectionArgs:" + selectionArgs);
         final SQLiteDatabase database = exerciseDbHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowsDeleted;
@@ -189,6 +200,7 @@ public class ExerciseProvider extends ContentProvider{
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String selection, @Nullable String[] selectionArgs) {
+        logger.log(Level.INFO, "update: uri: " + uri  + " selection: " + selection + " selectionArgs:" + selectionArgs);
         final SQLiteDatabase database = exerciseDbHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowsUpdated;

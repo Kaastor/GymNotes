@@ -1,4 +1,4 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.fragments;
 
 
 import android.app.AlertDialog;
@@ -18,10 +18,14 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
 public class ChooseExerciseDialog extends DialogFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private Logger logger = Logger.getLogger(ChooseExerciseDialog.class.toString());
 
     private AlertDialog.Builder builder;
     private String[] exercisesArray;
@@ -51,6 +55,7 @@ public class ChooseExerciseDialog extends DialogFragment implements LoaderManage
                 .setSingleChoiceItems(exercisesArray, 0, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         newEntryExerciseId = which+1; //id in database from 0
+                        logger.log(Level.INFO, this.getClass().toString() + " Chosen exercise: " + newEntryExerciseId);
                         Intent intent = new Intent();
                         intent.putExtra("newEntryExerciseId", Integer.toString(newEntryExerciseId));
                         getTargetFragment().onActivityResult(

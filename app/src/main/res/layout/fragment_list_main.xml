@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.edu.wat.gymnotes.DailyExercisesFragment"
+    tools:context="pl.edu.wat.gymnotes.fragments.DailyExercisesFragment"
     tools:showIn="@layout/activity_main">
 
     <ListView
@@ -30,3 +30,5 @@
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </FrameLayout>
+
+

@@ -24,6 +24,7 @@
     <string name="menu_delete">Usuń</string>
 
     <string name="list_item_exercises_series">Serie: </string>
+    <string name="list_exercises_empty">Jeszcze dziś nie ćwiczyłeś, zrób coś z tym!</string>
     <string name="list_item_exercises_reps">Powtórzenia: </string>
     <string name="fragment_add_training_view_choose">Wybierz ćwiczenie</string>
     <string name="fragment_add_training_view_series">SERIE:</string>

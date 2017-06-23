@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:showIn="@layout/activity_add_training"
-        tools:context="pl.edu.wat.gymnotes.AddTrainingFragment">
+        tools:context="pl.edu.wat.gymnotes.fragments.AddTrainingFragment">
 
     <Button
         android:id="@+id/dialog_choose_exercise"

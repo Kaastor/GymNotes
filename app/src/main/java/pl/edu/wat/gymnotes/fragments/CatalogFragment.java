@@ -1,4 +1,4 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.fragments;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,10 +17,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.activities.DetailActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
 public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor> {
+
+    private Logger logger = Logger.getLogger(CatalogFragment.class.toString());
 
     private String mExercise;
     private static final int CATALOG_LOADER = 0;
@@ -77,9 +83,12 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
                             cursor.getString(COL_EXERCISE_NAME),
                             cursor.getString(COL_EXERCISE_DESC)
                     };
+                    logger.log(Level.INFO, "exerciseDescription: " + exerciseDescription);
+
                     Intent intent = new Intent(getActivity(), DetailActivity.class)
                             .putExtra("exerciseDescription", exerciseDescription);
                     startActivity(intent);
+                    logger.log(Level.INFO, "Send intent to DetailActivity");
                 }
             }
         });

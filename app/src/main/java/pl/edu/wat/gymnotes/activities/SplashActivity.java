@@ -7,14 +7,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import pl.edu.wat.gymnotes.R;
 
 public class SplashActivity extends AppCompatActivity {
+
+    private Logger logger = Logger.getLogger(SplashActivity.class.toString());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+        logger.log(Level.INFO, "onCreate");
 
         LoginActivity.activeUserEmail = getApplicationContext().getSharedPreferences("userLogin",
                 MODE_PRIVATE).getString("userEmail", "");
@@ -31,12 +37,16 @@ public class SplashActivity extends AppCompatActivity {
         if (preferences.getString("userEmail", "").equals("")) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            logger.log(Level.INFO, "Send intent to LoginActivity");
             finish();
+            logger.log(Level.INFO, "finished");
         }
         else{
             Intent intent = new Intent(this, NavigationActivity.class);
             startActivity(intent);
+            logger.log(Level.INFO, "Send intent to NavigationActivity");
             finish();
+            logger.log(Level.INFO, "finished");
         }
         setContentView(R.layout.activity_splash);
     }

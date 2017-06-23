@@ -15,7 +15,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        logger.log(Level.INFO, this.getLocalClassName() + " Created.");
+        logger.log(Level.INFO, "onCreate.");
     }
 
     @Override

@@ -1,10 +1,10 @@
-package pl.edu.wat.gymnotes;
-
+package pl.edu.wat.gymnotes.fragments;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -21,23 +21,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import pl.edu.wat.gymnotes.R;
+import pl.edu.wat.gymnotes.activities.AddTrainingActivity;
 import pl.edu.wat.gymnotes.activities.LoginActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
+/**
+ * A placeholder fragment containing a simple view.
+ */
 
-public class DiaryDetailsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class DailyExercisesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    private ListView diaryDetailsList;
-    private SimpleCursorAdapter mDiaryDetailsAdapter;
-    private static final int DIARY_DETAILS_LOADER = 0;
+    private Logger logger = Logger.getLogger(DailyExercisesFragment.class.toString());
 
-
-    public DiaryDetailsFragment() {
-    }
-
-    String date;
+    String todayDate;
 
     private static final String[] PRACTICE_COLUMNS = {
             "p." + ExerciseContract.PracticeEntry._ID,
@@ -47,13 +50,36 @@ public class DiaryDetailsFragment extends Fragment implements LoaderManager.Load
             "p." + ExerciseContract.PracticeEntry.COLUMN_REPS,
     };
 
+    public static final int COL_PRACTICE_ID = 0;
+    public static final int COL_PRACTICE_EX_KEY = 1;
+    public static final int COL_PRACTICE_SERIES = 2;
+    public static final int COL_PRACTICE_REPS = 3;
+    public static final int COL_PRACTICE_DATE = 4;
+
+    private ListView todayExercisesList;
+    private SimpleCursorAdapter mExerciseAdapter;
+    private static final int DAILY_EXERCISE_LOADER = 0;
+
+    public DailyExercisesFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        logger.log(Level.INFO, "onCreateView");
+        View rootView = inflater.inflate(R.layout.fragment_list_main, container, false);
 
-        View rootView = inflater.inflate(R.layout.fragment_list_diary_details, container, false);
+        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddTrainingActivity.class);
+                startActivity(intent);
+                logger.log(Level.INFO, "Send intent to AddTrainingActivity");
+            }
+        });
 
-        mDiaryDetailsAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_exercises, null,
+        mExerciseAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_exercises, null,
                 new String[]{
                         ExerciseContract.ExerciseEntry.COLUMN_NAME,
                         ExerciseContract.PracticeEntry.COLUMN_SERIES,
@@ -66,51 +92,51 @@ public class DiaryDetailsFragment extends Fragment implements LoaderManager.Load
                 },
                 0
         );
-        diaryDetailsList = rootView.findViewById(R.id.list_view_diary_details);
-        diaryDetailsList.setAdapter(mDiaryDetailsAdapter);
+        todayExercisesList = rootView.findViewById(R.id.list_view_exercises);
+        todayExercisesList.setAdapter(mExerciseAdapter);
 
-        diaryDetailsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        todayExercisesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getActivity(), "Mogłeś się bardziej postarać!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Dawaj dalej!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        diaryDetailsList.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+        todayExercisesList.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-                DiaryDetailsFragment.super.onCreateContextMenu(contextMenu, view, contextMenuInfo);
-                Toast.makeText(getActivity(), "menu!", Toast.LENGTH_SHORT).show();
-                if (view.getId()==R.id.list_view_diary_details) {
+                DailyExercisesFragment.super.onCreateContextMenu(contextMenu, view, contextMenuInfo);
+                if (view.getId()==R.id.list_view_exercises) {
                     MenuInflater inflater = getActivity().getMenuInflater();
                     inflater.inflate(R.menu.menu_exercise_entry, contextMenu);
                 }
             }
         });
+
         return rootView;
     }
 
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(DIARY_DETAILS_LOADER, null, this);
+        getLoaderManager().initLoader(DAILY_EXERCISE_LOADER, null, this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getLoaderManager().restartLoader(DIARY_DETAILS_LOADER, null, this);
+        logger.log(Level.INFO, "resumed");
+        getLoaderManager().restartLoader(DAILY_EXERCISE_LOADER, null, this);
     }
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
-        Intent intent = getActivity().getIntent();
-        if(intent != null ){
-            date = intent.getStringExtra("data");
-            Toast.makeText(getActivity(), date, Toast.LENGTH_SHORT).show();
-        }
+        logger.log(Level.INFO, " onCreateLoader");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        todayDate = sdf.format(Calendar.getInstance().getTime());
 
-        Uri practicesUri = ExerciseContract.PracticeEntry.buildPracticeForDateAndUser(LoginActivity.activeUserEmail, date);
+        Uri practicesUri = ExerciseContract.PracticeEntry.buildPracticeForDateAndUser(LoginActivity.activeUserEmail, todayDate);
         return new CursorLoader(
                 getActivity(),
                 practicesUri,
@@ -119,16 +145,18 @@ public class DiaryDetailsFragment extends Fragment implements LoaderManager.Load
                 null,
                 null
         );
+
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mDiaryDetailsAdapter.swapCursor(data);
+        logger.log(Level.INFO, " onLoadFinished");
+        mExerciseAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader loader) {
-        mDiaryDetailsAdapter.swapCursor(null);
+        mExerciseAdapter.swapCursor(null);
     }
 
     @Override
@@ -141,6 +169,7 @@ public class DiaryDetailsFragment extends Fragment implements LoaderManager.Load
                         null,
                         null
                 );
+                logger.log(Level.INFO, "deleted Practice id:" + info.id);
                 this.onResume();
                 return true;
             default:

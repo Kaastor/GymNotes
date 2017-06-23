@@ -1,11 +1,10 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.fragments;
 
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -18,17 +17,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.activities.LoginActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
 
 
 public class AddTrainingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private Logger logger = Logger.getLogger(AddTrainingFragment.class.toString());
 
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     private String todayDate = sdf.format(Calendar.getInstance().getTime());
@@ -53,6 +56,8 @@ public class AddTrainingFragment extends Fragment implements LoaderManager.Loade
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                Bundle savedInstanceState) {
+        logger.log(Level.INFO, "onCreateView");
+
         rootView = inflater.inflate(R.layout.fragment_add_training_view, container, false);
         series = rootView.findViewById(R.id.dialog_add_series);
         reps = rootView.findViewById(R.id.dialog_add_reps);
@@ -127,6 +132,10 @@ public class AddTrainingFragment extends Fragment implements LoaderManager.Loade
 
     private void saveToDatabase(){
         ExerciseDbHelper dbHelper = new ExerciseDbHelper(getContext());
+
+        logger.log(Level.INFO, "saveToDatabase:" + newEntryDate + " " + dbHelper.getUserId(LoginActivity.activeUserEmail) + " " +
+                + newEntryExerciseId + " " + newEntrySeries + " " + newEntryReps );
+
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues practiceValues = new ContentValues();
         practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_DATE, newEntryDate);
