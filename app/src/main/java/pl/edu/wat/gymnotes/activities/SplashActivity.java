@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import pl.edu.wat.gymnotes.R;
+import pl.edu.wat.gymnotes.network.ExerciseSyncAdapter;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -49,5 +50,7 @@ public class SplashActivity extends AppCompatActivity {
             logger.log(Level.INFO, "finished");
         }
         setContentView(R.layout.activity_splash);
+        logger.log(Level.INFO, "Init ExerciseSyncAdapter");
+        ExerciseSyncAdapter.initializeSyncAdapter(this);
     }
 }
