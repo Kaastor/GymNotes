@@ -16,9 +16,22 @@ public class ExerciseContract {
 
     public static final String PATH_EXERCISE = "exercise";
     public static final String PATH_PRACTICE = "practice";
+    public static final String PATH_USER = "user";
 
     public static final String PATH_DIST_PRACTICE = "distinctPractice";
     public static final String PATH_DEL_PRACTICE = "distinctPractice";
+
+    public static final class UserEntry implements BaseColumns{
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.
+                buildUpon().appendPath(PATH_USER).build();
+
+        public static final String TABLE_NAME = "user";
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_EMAIL = "email";
+        public static final String COLUMN_PASSWORD = "password";
+
+    }
 
     public static final class ExerciseEntry implements BaseColumns{
 
@@ -31,8 +44,6 @@ public class ExerciseContract {
 
         public static final String TABLE_NAME = "exercise";
         public static final String COLUMN_NAME = "name";
-//        public static final String COLUMN_PICTURE_BEFORE = "pic_before";
-//        public static final String COLUMN_PICTURE_AFTER = "pic_after";
         public static final String COLUMN_DESCRIPTION = "description";
 
 

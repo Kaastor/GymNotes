@@ -1,7 +1,8 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.activities;
 
 import android.os.Bundle;
-import android.widget.Toast;
+
+import pl.edu.wat.gymnotes.R;
 
 public class AboutActivity extends BaseActivity {
 

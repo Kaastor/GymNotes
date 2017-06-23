@@ -1,8 +1,11 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.activities;
 
 import android.os.Bundle;
 
-public class DetailActivity extends BaseActivity {
+import pl.edu.wat.gymnotes.R;
+import pl.edu.wat.gymnotes.activities.BaseActivity;
+
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -11,6 +14,6 @@ public class DetailActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_detail;
+        return R.layout.activity_main;
     }
 }

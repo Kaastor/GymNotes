@@ -1,4 +1,4 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import pl.edu.wat.gymnotes.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
 

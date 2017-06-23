@@ -1,4 +1,4 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,9 +10,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import pl.edu.wat.gymnotes.DailyExercisesFragment;
+import pl.edu.wat.gymnotes.DiaryCalendarDialog;
+import pl.edu.wat.gymnotes.R;
 
 public class NavigationActivity extends BaseActivity {
 

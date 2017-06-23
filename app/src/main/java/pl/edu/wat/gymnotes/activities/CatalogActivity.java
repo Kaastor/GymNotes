@@ -1,18 +1,20 @@
-package pl.edu.wat.gymnotes;
+package pl.edu.wat.gymnotes.activities;
 
 import android.os.Bundle;
 
+import pl.edu.wat.gymnotes.R;
 
-public class DiaryDetailsActivity extends BaseActivity {
+public class CatalogActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_diary_details;
+        return R.layout.activity_catalog;
     }
-}
+
+    }
+

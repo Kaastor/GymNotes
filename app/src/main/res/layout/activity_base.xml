@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.edu.wat.gymnotes.BaseActivity">
+    tools:context="pl.edu.wat.gymnotes.activities.BaseActivity">
 
     <include layout="@layout/app_toolbar"/>
 

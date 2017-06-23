@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import pl.edu.wat.gymnotes.activities.AddTrainingActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
 /**

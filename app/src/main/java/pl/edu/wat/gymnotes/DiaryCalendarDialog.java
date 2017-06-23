@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
+import pl.edu.wat.gymnotes.activities.DiaryDetailsActivity;
 
 
 public class DiaryCalendarDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener{

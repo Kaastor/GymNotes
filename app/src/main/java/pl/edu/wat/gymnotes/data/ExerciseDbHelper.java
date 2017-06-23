@@ -2,8 +2,12 @@ package pl.edu.wat.gymnotes.data;
 
 import pl.edu.wat.gymnotes.data.ExerciseContract.ExerciseEntry;
 import pl.edu.wat.gymnotes.data.ExerciseContract.PracticeEntry;
+import pl.edu.wat.gymnotes.data.ExerciseContract.UserEntry;
+import pl.edu.wat.gymnotes.model.User;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -11,15 +15,20 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     static final String DATABASE_NAME = "gymnotes.db";
-    static Context context;
 
     public ExerciseDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        final String SQL_CREATE_USER_TABLE = "CREATE TABLE " + UserEntry.TABLE_NAME + " (" +
+                UserEntry._ID + " INTEGER PRIMARY KEY," +
+                UserEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                UserEntry.COLUMN_EMAIL + " TEXT NOT NULL, " +
+                UserEntry.COLUMN_PASSWORD + " TEXT NOT NULL " +
+                " );";
+
         final String SQL_CREATE_EXERCISE_TABLE = "CREATE TABLE " + ExerciseEntry.TABLE_NAME + " (" +
                 ExerciseEntry._ID + " INTEGER PRIMARY KEY," +
                 ExerciseEntry.COLUMN_NAME + " TEXT NOT NULL, " +
@@ -38,6 +47,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
 
                 " );";
 
+        sqLiteDatabase.execSQL(SQL_CREATE_USER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_EXERCISE_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_PRACTICE_TABLE);
     }
@@ -46,6 +56,59 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ExerciseEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + PracticeEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + UserEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
+    }
+
+    public void addUser(User user){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(UserEntry.COLUMN_NAME, user.getName());
+        contentValues.put(UserEntry.COLUMN_EMAIL, user.getEmail());
+        contentValues.put(UserEntry.COLUMN_PASSWORD, user.getPassword());
+
+        database.insert(UserEntry.TABLE_NAME, null, contentValues);
+        database.close();
+    }
+    public boolean checkUser(String email){
+        String[] columns = {
+                UserEntry._ID
+        };
+        SQLiteDatabase database = this.getWritableDatabase();
+        String selection = UserEntry.COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = { email };
+
+        Cursor cursor = database.query(UserEntry.TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                null, null, null);
+
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        database.close();
+
+        return cursorCount > 0;
+    }
+
+    public boolean checkUser(String email, String password){
+        String[] columns = {
+                UserEntry._ID
+        };
+        SQLiteDatabase database = this.getWritableDatabase();
+        String selection = UserEntry.COLUMN_EMAIL + " = ?" + UserEntry.COLUMN_PASSWORD + " = ?";
+        String[] selectionArgs = { email, password };
+
+        Cursor cursor = database.query(UserEntry.TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                null, null, null);
+
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        database.close();
+
+        return cursorCount > 0;
     }
 }

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import pl.edu.wat.gymnotes.activities.DetailActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
 public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor> {
