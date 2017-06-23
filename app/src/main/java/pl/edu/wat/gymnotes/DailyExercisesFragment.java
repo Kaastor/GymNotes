@@ -23,8 +23,12 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import pl.edu.wat.gymnotes.activities.AddTrainingActivity;
+import pl.edu.wat.gymnotes.activities.LoginActivity;
+import pl.edu.wat.gymnotes.activities.NavigationActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
 /**
@@ -32,6 +36,8 @@ import pl.edu.wat.gymnotes.data.ExerciseContract;
  */
 
 public class DailyExercisesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+
+    private Logger logger = Logger.getLogger(DailyExercisesFragment.class.toString());
 
     String todayDate;
 
@@ -59,7 +65,7 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        logger.log(Level.INFO, this.getClass().toString() + " Created.");
         View rootView = inflater.inflate(R.layout.fragment_list_main, container, false);
 
         FloatingActionButton fab = rootView.findViewById(R.id.fab);
@@ -123,10 +129,11 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
+        logger.log(Level.INFO, " onCreateLoader");
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         todayDate = sdf.format(Calendar.getInstance().getTime());
 
-        Uri practicesUri = ExerciseContract.PracticeEntry.buildPracticeForDate(todayDate);
+        Uri practicesUri = ExerciseContract.PracticeEntry.buildPracticeForDateAndUser(LoginActivity.activeUserEmail, todayDate);
         return new CursorLoader(
                 getActivity(),
                 practicesUri,
@@ -135,10 +142,12 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
                 null,
                 null
         );
+
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        logger.log(Level.INFO, " onLoadFinished");
         mExerciseAdapter.swapCursor(data);
     }
 

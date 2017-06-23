@@ -42,6 +42,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    public static String activeUserEmail;
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
@@ -151,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = validation.userLoginValidation(mEmailView, mPasswordView);
             if(focusView == null) {
                 showProgress(true);
-
+                activeUserEmail = mEmailView.getText().toString();
                 Intent intent = new Intent(this, NavigationActivity.class);
                 intent.putExtra("userName", new ExerciseDbHelper(getApplicationContext()).getUserName(mEmailView.getText().toString()));
                 startActivity(intent);

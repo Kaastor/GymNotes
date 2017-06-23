@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 
+import pl.edu.wat.gymnotes.activities.LoginActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 
 
@@ -109,7 +110,7 @@ public class DiaryDetailsFragment extends Fragment implements LoaderManager.Load
             Toast.makeText(getActivity(), date, Toast.LENGTH_SHORT).show();
         }
 
-        Uri practicesUri = ExerciseContract.PracticeEntry.buildPracticeForDate(date);
+        Uri practicesUri = ExerciseContract.PracticeEntry.buildPracticeForDateAndUser(LoginActivity.activeUserEmail, date);
         return new CursorLoader(
                 getActivity(),
                 practicesUri,

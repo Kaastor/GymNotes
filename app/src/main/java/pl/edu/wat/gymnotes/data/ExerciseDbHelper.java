@@ -38,6 +38,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_PRACTICE_TABLE = "CREATE TABLE " + PracticeEntry.TABLE_NAME + " (" +
                 PracticeEntry._ID + " INTEGER PRIMARY KEY," +
+                PracticeEntry.COLUMN_USER_KEY + " INTEGER NOT NULL, " +
                 PracticeEntry.COLUMN_EX_KEY + " INTEGER NOT NULL, " +
                 PracticeEntry.COLUMN_DATE + " TEXT NOT NULL, " +
                 PracticeEntry.COLUMN_SERIES + " INTEGER NOT NULL, " +
@@ -90,6 +91,28 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         database.close();
 
         return cursorCount == 1;
+    }
+
+    public String getUserId(String email){
+        String userId = "";
+        String[] columns = {
+                UserEntry._ID, UserEntry.COLUMN_EMAIL
+        };
+        SQLiteDatabase database = this.getWritableDatabase();
+        String selection = UserEntry.COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = { email };
+
+        Cursor cursor = database.query(UserEntry.TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            userId = cursor.getString(cursor.getColumnIndex(UserEntry._ID));
+        }
+        cursor.close();
+        return userId;
     }
 
     public String getUserName(String email){

@@ -12,11 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import pl.edu.wat.gymnotes.DailyExercisesFragment;
 import pl.edu.wat.gymnotes.DiaryCalendarDialog;
 import pl.edu.wat.gymnotes.R;
 
 public class NavigationActivity extends BaseActivity {
+
+    private Logger logger = Logger.getLogger(NavigationActivity.class.toString());
 
     private static final int MAIN_SITE_MENU_INDEX = 1;
     private DrawerLayout mDrawer;
@@ -29,6 +34,8 @@ public class NavigationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        logger.log(Level.INFO, this.getLocalClassName() + " Created.");
 
         Intent intent = getIntent();
         if(intent != null ) {

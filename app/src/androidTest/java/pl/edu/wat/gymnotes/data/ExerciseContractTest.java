@@ -5,6 +5,8 @@ import android.test.AndroidTestCase;
 
 import org.junit.Test;
 
+import pl.edu.wat.gymnotes.model.User;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
@@ -16,7 +18,11 @@ public class ExerciseContractTest extends AndroidTestCase {
 
     @Test
     public void testBuildPracticeDate() {
-        Uri practiceUri = ExerciseContract.PracticeEntry.buildPracticeForDate(TEST_PRACTICE_DATE);
+        ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
+
+        helper.addUser(new User("dude", "dude@wp.pl", "dude"));
+        String userEmail = "dude@wp.pl";
+        Uri practiceUri = ExerciseContract.PracticeEntry.buildPracticeForDateAndUser(userEmail, TEST_PRACTICE_DATE);
         assertNotNull("Error: Null Uri returned.  You must fill-in buildPracticeForDate in " +
                         "ExerciseContract.",
                 practiceUri);

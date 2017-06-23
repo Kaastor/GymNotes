@@ -33,7 +33,7 @@ public class ExerciseProvider extends ContentProvider{
     static final int EXERCISE = 100;
     static final int EXERCISE_FOR_NAME = 101;
     static final int PRACTICE = 200;
-    static final int PRACTICE_WITH_DATE = 201;
+    static final int PRACTICE_WITH_USER_AND_DATE = 201;
     static final int PRACTICE_DISTINCT = 202;
     static final int PRACTICE_WITH_ID = 203;
 
@@ -49,7 +49,7 @@ public class ExerciseProvider extends ContentProvider{
         matcher.addURI(authority, ExerciseContract.PATH_EXERCISE + "/*", EXERCISE_FOR_NAME);
 
         matcher.addURI(authority, ExerciseContract.PATH_PRACTICE, PRACTICE);
-        matcher.addURI(authority, ExerciseContract.PATH_PRACTICE + "/*", PRACTICE_WITH_DATE);
+        matcher.addURI(authority, ExerciseContract.PATH_PRACTICE + "/*/*", PRACTICE_WITH_USER_AND_DATE);
         matcher.addURI(authority, ExerciseContract.PATH_DIST_PRACTICE , PRACTICE_DISTINCT);
         matcher.addURI(authority, ExerciseContract.PATH_DEL_PRACTICE + "/*", PRACTICE_WITH_ID);
 
@@ -79,8 +79,8 @@ public class ExerciseProvider extends ContentProvider{
                         sortOrder
                 );
                 break;
-            case PRACTICE_WITH_DATE:
-                retCursor = getPracticeByDate(uri, projection, sortOrder);
+            case PRACTICE_WITH_USER_AND_DATE:
+                retCursor = getPracticeByUserAndDate(uri, projection, sortOrder);
                 break;
             case PRACTICE_DISTINCT:
                 retCursor = getDistinctPracticesDates(uri, projection, sortOrder);
@@ -112,7 +112,7 @@ public class ExerciseProvider extends ContentProvider{
                 return ExerciseContract.ExerciseEntry.CONTENT_ITEM_TYPE;
             case PRACTICE:
                 return ExerciseContract.PracticeEntry.CONTENT_TYPE;
-            case PRACTICE_WITH_DATE:
+            case PRACTICE_WITH_USER_AND_DATE:
                 return ExerciseContract.PracticeEntry.CONTENT_TYPE;
             case PRACTICE_WITH_ID:
                 return ExerciseContract.PracticeEntry.CONTENT_ITEM_TYPE;
@@ -239,17 +239,18 @@ public class ExerciseProvider extends ContentProvider{
     }
 
     private static final String sPracticeDateSelection =
-            "p"+                    "." + ExerciseContract.PracticeEntry.COLUMN_DATE + " = ? ";
+            "p"+  "." + ExerciseContract.PracticeEntry.COLUMN_USER_KEY + " = ? AND " + "p"+  "." +
+                    ExerciseContract.PracticeEntry.COLUMN_DATE+ " = ? ";
 
-    private Cursor getPracticeByDate(
+    private Cursor getPracticeByUserAndDate(
             Uri uri, String[] projection, String sortOrder) {
         String date = ExerciseContract.PracticeEntry.getDateFromUri(uri);
-//        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-//        queryBuilder.setTables(ExerciseContract.PracticeEntry.TABLE_NAME);
+        String user = ExerciseContract.PracticeEntry.getUserFromUri(uri);//getID
+        String userId = exerciseDbHelper.getUserId(user);
         return sPracticeWithExerciseQueryBuilder.query(exerciseDbHelper.getReadableDatabase(),
                 projection,
                 sPracticeDateSelection,
-                new String[]{date},
+                new String[]{userId, date},
                 null,
                 null,
                 sortOrder

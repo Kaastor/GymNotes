@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import pl.edu.wat.gymnotes.activities.LoginActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
 import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
 
@@ -129,6 +130,7 @@ public class AddTrainingFragment extends Fragment implements LoaderManager.Loade
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues practiceValues = new ContentValues();
         practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_DATE, newEntryDate);
+        practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_USER_KEY, dbHelper.getUserId(LoginActivity.activeUserEmail));
         practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_EX_KEY, newEntryExerciseId);
         practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_SERIES, newEntrySeries);
         practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_REPS, newEntryReps);

@@ -9,49 +9,51 @@ import android.provider.BaseColumns;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import pl.edu.wat.gymnotes.model.User;
+
 public class ExerciseContract {
 
-    public static final String CONTENT_AUTHORITY = "pl.edu.wat.gymnotes.app";
-    public static final Uri BASE_CONTENT_URI  = Uri.parse("content://" + CONTENT_AUTHORITY);
+    static final String CONTENT_AUTHORITY = "pl.edu.wat.gymnotes.app";
+    static final Uri BASE_CONTENT_URI  = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    public static final String PATH_EXERCISE = "exercise";
-    public static final String PATH_PRACTICE = "practice";
-    public static final String PATH_USER = "user";
+    static final String PATH_EXERCISE = "exercise";
+    static final String PATH_PRACTICE = "practice";
+    static final String PATH_USER = "user";
 
-    public static final String PATH_DIST_PRACTICE = "distinctPractice";
-    public static final String PATH_DEL_PRACTICE = "distinctPractice";
+    static final String PATH_DIST_PRACTICE = "distinctPractice";
+    static final String PATH_DEL_PRACTICE = "distinctPractice";
 
-    public static final class UserEntry implements BaseColumns{
+    static final class UserEntry implements BaseColumns{
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.
+        static final Uri CONTENT_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_USER).build();
 
-        public static final String TABLE_NAME = "user";
-        public static final String COLUMN_NAME = "name";
-        public static final String COLUMN_EMAIL = "email";
-        public static final String COLUMN_PASSWORD = "password";
+        static final String TABLE_NAME = "user";
+        static final String COLUMN_NAME = "name";
+        static final String COLUMN_EMAIL = "email";
+        static final String COLUMN_PASSWORD = "password";
 
     }
 
     public static final class ExerciseEntry implements BaseColumns{
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.
+        static final Uri CONTENT_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_EXERCISE).build();
-        public static final String CONTENT_TYPE =
+        static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EXERCISE;
-        public static final String CONTENT_ITEM_TYPE =
+        static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EXERCISE;
 
-        public static final String TABLE_NAME = "exercise";
+        static final String TABLE_NAME = "exercise";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DESCRIPTION = "description";
 
 
-        public static Uri buildExerciseUri(long id) {
+        static Uri buildExerciseUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildExerciseForName(String name) {
+        static Uri buildExerciseForName(String name) {
             return CONTENT_URI.buildUpon().appendPath(name).build();
         }
 
@@ -63,31 +65,32 @@ public class ExerciseContract {
 
     public static final class PracticeEntry implements BaseColumns{
 
-        public static final Uri CONTENT_DIST_URI = BASE_CONTENT_URI.
+        static final Uri CONTENT_DIST_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_DIST_PRACTICE).build();
 
-        public static final Uri CONTENT_DEL_URI = BASE_CONTENT_URI.
+        static final Uri CONTENT_DEL_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_DEL_PRACTICE).build();
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.
+        static final Uri CONTENT_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_PRACTICE).build();
-        public static final String CONTENT_TYPE =
+        static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRACTICE;
-        public static final String CONTENT_ITEM_TYPE =
+        static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRACTICE;
 
         public static final String TABLE_NAME = "practice";
+        public static final String COLUMN_USER_KEY = "user_id";
         public static final String COLUMN_EX_KEY = "exercise_id";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_SERIES = "series";
         public static final String COLUMN_REPS = "reps";
 
-        public static Uri buildPracticeUri(long id) {
+        static Uri buildPracticeUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildPracticeForDate(String date) {
-            return CONTENT_URI.buildUpon().appendPath(date).build();
+        public static Uri buildPracticeForDateAndUser(String email, String date) {
+            return CONTENT_URI.buildUpon().appendPath(email).appendPath(date).build();
         }
 
         public static Uri buildPracticeForId(String id) {
@@ -98,13 +101,17 @@ public class ExerciseContract {
             return CONTENT_URI.buildUpon().build();
         }
 
-        public static Uri buildDistinctPracticesDates() {
+        static Uri buildDistinctPracticesDates() {
             return CONTENT_DIST_URI.buildUpon().build();
         }
 
-        public static String getDateFromUri(Uri uri) {
+        static String getDateFromUri(Uri uri) {
+            return uri.getPathSegments().get(2);
+        }
+        static String getUserFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
+
     }
 
 

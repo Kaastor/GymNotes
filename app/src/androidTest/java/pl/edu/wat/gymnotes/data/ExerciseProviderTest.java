@@ -110,6 +110,15 @@ public class ExerciseProviderTest extends AndroidTestCase {
         assertEquals("przemo", userName);
     }
 
+    @Test
+    public void testGetUserId(){
+        ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
+
+        String userId = helper.getUserId("dude@wp.pl");
+
+        System.out.println(userId);
+    }
+
 
     @Test
     public void testProviderRegistry() {
@@ -136,6 +145,9 @@ public class ExerciseProviderTest extends AndroidTestCase {
     }
 
     public void testGetType() {
+        ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
+        helper.addUser(new User("dude", "dude@wp.pl", "dude"));
+        String userEmail = "dude@wp.pl";
         // content://pl.edu.wat.gymnotes.app/practice/
         String type = mContext.getContentResolver().getType(PracticeEntry.CONTENT_URI);
         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
@@ -145,7 +157,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
         String testDate = "1982-11-08";
         // content://pl.edu.wat.gymnotes.app/practice/"1982-11-08"
         type = mContext.getContentResolver().getType(
-                PracticeEntry.buildPracticeForDate(testDate));
+                PracticeEntry.buildPracticeForDateAndUser(userEmail, testDate));
         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
         assertEquals("Error: the PracticeEntry CONTENT_URI with location should return PracticeEntry.CONTENT_TYPE",
                 PracticeEntry.CONTENT_TYPE, type);
@@ -160,10 +172,13 @@ public class ExerciseProviderTest extends AndroidTestCase {
 
 
     public void testBasicPracticeQuery() {
+
         // insert our test records into the database
         ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        dbHelper.addUser(new User("dude", "dude@wp.pl", "dude"));
+        String userEmail = "dude@wp.pl";
         // Fantastic.  Now that we have a location, add some weather!
         ContentValues practiceValues = TestUtilities.createSimplePracticeValues(exercisesRowIds.get(0));
 
@@ -173,7 +188,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
 
         // Test the basic content provider query
         Cursor practiceCursor = mContext.getContentResolver().query(
-                PracticeEntry.buildPracticeForDate(TestUtilities.date),
+                PracticeEntry.buildPracticeForDateAndUser(userEmail, TestUtilities.date),
                 null,
                 null,
                 null,
@@ -239,7 +254,9 @@ public class ExerciseProviderTest extends AndroidTestCase {
     }
 
     public void testBulkInsert() {
-
+        ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
+        helper.addUser(new User("dude", "dude@wp.pl", "dude"));
+        String userEmail = "dude@wp.pl";
         ContentValues[] bulkInsertContentValues = createBulkInsertPracticeValues();
 
         int insertCount = mContext.getContentResolver().bulkInsert(PracticeEntry.CONTENT_URI, bulkInsertContentValues);
@@ -247,7 +264,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
 
         // A cursor is your primary interface to the query results.
         Cursor cursor = mContext.getContentResolver().query(
-                PracticeEntry.buildPracticeForDate(TestUtilities.date),
+                PracticeEntry.buildPracticeForDateAndUser(userEmail, TestUtilities.date),
                 null, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
                 null, // values for "where" clause
@@ -275,10 +292,12 @@ public class ExerciseProviderTest extends AndroidTestCase {
     }
 
     public void testPracticeQueryForDate() {
-
+        ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
+        helper.addUser(new User("dude", "dude@wp.pl", "dude"));
+        String userEmail = "dude@wp.pl";
         Cursor cursor;
         cursor = mContext.getContentResolver().query(
-                PracticeEntry.buildPracticeForDate(TestUtilities.date),
+                PracticeEntry.buildPracticeForDateAndUser(userEmail, TestUtilities.date),
                 new String[]{ExerciseEntry.COLUMN_NAME, PracticeEntry.COLUMN_DATE}, // leaving "columns" null just returns all the columns.
                 null, // cols for "where" clause
                 null, // values for "where" clause
