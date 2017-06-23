@@ -62,7 +62,7 @@ public class InputValidation {
         email = mEmailView.getText().toString();
         password = mPasswordView.getText().toString();
 
-        if (dbHelper.checkUser(email, password)) {
+        if (!dbHelper.checkUser(email, password)) {
             mEmailView.setError(context.getResources().getString(R.string.error_wrong_login_or_pass));
             focusView = mEmailView;
         }
@@ -74,7 +74,7 @@ public class InputValidation {
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        return password.length() > 1;
     }
 
     public String getEmail() {

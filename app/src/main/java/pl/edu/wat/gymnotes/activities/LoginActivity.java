@@ -142,11 +142,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // There was an error
             focusView.requestFocus();
         } else {
-//            if(validation.userLoginValidation(mEmailView, mPasswordView) != null) {
+            focusView = validation.userLoginValidation(mEmailView, mPasswordView);
+            if(focusView == null) {
                 showProgress(true);
                 mAuthTask = new UserLoginTask(validation.getEmail(), validation.getPassword());
                 mAuthTask.execute((Void) null);
-//            }
+            }
+            else{
+                focusView.requestFocus();
+            }
         }
     }
 
