@@ -26,8 +26,9 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
                 UserEntry._ID + " INTEGER PRIMARY KEY," +
                 UserEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 UserEntry.COLUMN_EMAIL + " TEXT NOT NULL, " +
-                UserEntry.COLUMN_PASSWORD + " TEXT NOT NULL " +
-                " );";
+                UserEntry.COLUMN_PASSWORD + " TEXT NOT NULL, " +
+                " UNIQUE (" + UserEntry.COLUMN_EMAIL +
+                " ));";
 
         final String SQL_CREATE_EXERCISE_TABLE = "CREATE TABLE " + ExerciseEntry.TABLE_NAME + " (" +
                 ExerciseEntry._ID + " INTEGER PRIMARY KEY," +
@@ -70,7 +71,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         database.insert(UserEntry.TABLE_NAME, null, contentValues);
         database.close();
     }
-    public boolean checkUser(String email){
+    public int checkUser(String email){
         String[] columns = {
                 UserEntry._ID
         };
@@ -88,7 +89,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         cursor.close();
         database.close();
 
-        return cursorCount > 0;
+        return cursorCount;
     }
 
     public boolean checkUser(String email, String password){
@@ -96,7 +97,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
                 UserEntry._ID
         };
         SQLiteDatabase database = this.getWritableDatabase();
-        String selection = UserEntry.COLUMN_EMAIL + " = ?" + UserEntry.COLUMN_PASSWORD + " = ?";
+        String selection = UserEntry.COLUMN_EMAIL + " = ? AND " + UserEntry.COLUMN_PASSWORD + " = ?";
         String[] selectionArgs = { email, password };
 
         Cursor cursor = database.query(UserEntry.TABLE_NAME,

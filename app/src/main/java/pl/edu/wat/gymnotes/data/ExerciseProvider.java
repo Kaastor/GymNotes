@@ -37,9 +37,13 @@ public class ExerciseProvider extends ContentProvider{
     static final int PRACTICE_DISTINCT = 202;
     static final int PRACTICE_WITH_ID = 203;
 
+    static final int USER = 300;
+
     static UriMatcher buildUriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = ExerciseContract.CONTENT_AUTHORITY;
+
+        matcher.addURI(authority, ExerciseContract.PATH_USER, USER);
 
         matcher.addURI(authority, ExerciseContract.PATH_EXERCISE, EXERCISE);
         matcher.addURI(authority, ExerciseContract.PATH_EXERCISE + "/*", EXERCISE_FOR_NAME);
@@ -168,6 +172,10 @@ public class ExerciseProvider extends ContentProvider{
             case EXERCISE:
                 rowsDeleted = database.delete(
                         ExerciseContract.ExerciseEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case USER:
+                rowsDeleted = database.delete(
+                        ExerciseContract.UserEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

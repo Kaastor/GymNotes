@@ -8,15 +8,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import pl.edu.wat.gymnotes.R;
+import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
 
 public class InputValidation {
 
-    private Context context;
     private String email;
     private String password;
+    private ExerciseDbHelper dbHelper;
+    private Context context;
 
     public InputValidation(Context context) {
         this.context = context;
+        this.dbHelper = new ExerciseDbHelper(context);
     }
 
     public View loginFieldsValidation(AutoCompleteTextView mEmailView, EditText mPasswordView){
@@ -31,7 +34,10 @@ public class InputValidation {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) ) {
+            mPasswordView.setError(context.getResources().getString(R.string.error_field_required));
+            focusView = mPasswordView;
+        } else if (!isPasswordValid(password)) {
             mPasswordView.setError(context.getResources().getString(R.string.error_invalid_password));
             focusView = mPasswordView;
         }
@@ -48,12 +54,27 @@ public class InputValidation {
         return focusView;
     }
 
+    public View userLoginValidation(AutoCompleteTextView mEmailView, EditText mPasswordView){
+        View focusView = null;
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+        email = mEmailView.getText().toString();
+        password = mPasswordView.getText().toString();
+
+        if (dbHelper.checkUser(email, password)) {
+            mEmailView.setError(context.getResources().getString(R.string.error_wrong_login_or_pass));
+            focusView = mEmailView;
+        }
+        return focusView;
+    }
+
     private boolean isEmailValid(String email) {
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 2;
+        return password.length() > 4;
     }
 
     public String getEmail() {

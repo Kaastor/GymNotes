@@ -2,6 +2,7 @@ package pl.edu.wat.gymnotes.data;
 
 import pl.edu.wat.gymnotes.data.ExerciseContract.PracticeEntry;
 import pl.edu.wat.gymnotes.data.ExerciseContract.ExerciseEntry;
+import pl.edu.wat.gymnotes.model.User;
 
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -81,6 +82,25 @@ public class ExerciseProviderTest extends AndroidTestCase {
 
         // Make sure we get the correct cursor out of the database
     }
+
+    @Test
+    public void testdeleteUsers() {
+        mContext.getContentResolver().delete(
+                ExerciseContract.UserEntry.CONTENT_URI,
+                null,
+                null
+        );
+    }
+    @Test
+    public void testAddAndQueryUser(){
+        ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
+        User user = new User("przemo", "przemo@wp.pl", "przemo123");
+
+        helper.addUser(user);
+        int response = helper.checkUser(user.getEmail());
+        assertEquals(response, 1);
+    }
+
 
     @Test
     public void testProviderRegistry() {
