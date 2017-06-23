@@ -71,7 +71,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         database.insert(UserEntry.TABLE_NAME, null, contentValues);
         database.close();
     }
-    public int checkUser(String email){
+    public boolean checkUser(String email){
         String[] columns = {
                 UserEntry._ID
         };
@@ -89,7 +89,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         cursor.close();
         database.close();
 
-        return cursorCount;
+        return cursorCount == 1;
     }
 
     public String getUserName(String email){

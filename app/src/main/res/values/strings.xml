@@ -33,15 +33,20 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
+    <string name="prompt_name">Nazwa</string>
     <string name="prompt_password">Hasło</string>
+    <string name="prompt_again_password">Powtórz hasło</string>
     <string name="action_sign_in">Zaloguj</string>
+    <string name="action_register_new">Nie masz konta? Stwórz je teraz!</string>
     <string name="action_register">Zarejestruj</string>
     <string name="action_sign_in_short">Zaloguj</string>
     <string name="error_invalid_email">Adres email jest niepoprawny</string>
     <string name="error_invalid_password">Hasło za krótkie</string>
+    <string name="error_invalid_match_password">Hasła są różne</string>
     <string name="error_incorrect_password">Hasło jest niepoprawne</string>
     <string name="error_field_required">Pole wymagane</string>
     <string name="error_wrong_login_or_pass">Zły login lub hasło</string>
+    <string name="error_existing_login">Email jest już zajęty</string>
 
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
