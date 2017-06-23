@@ -57,9 +57,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private Button mEmailSignInButton;
     private Button registerButton;
 
-//    private SharedPreferences preferences = this.getSharedPreferences(
-//            "pl.edu.wat.gymnotes.app", Context.MODE_PRIVATE);
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -164,7 +161,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void onLogInActions(){
         showProgress(true);
 
-//        preferences.edit().putBoolean("isLoginKey",true).apply();
+        getApplicationContext().getSharedPreferences("userLogin",
+                MODE_PRIVATE).edit().putString("userEmail", mEmailView.getText().toString()).apply();
 
         activeUserEmail = mEmailView.getText().toString();
         Intent intent = new Intent(this, NavigationActivity.class);

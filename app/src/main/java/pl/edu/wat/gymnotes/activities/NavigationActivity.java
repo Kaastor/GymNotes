@@ -140,7 +140,8 @@ public class NavigationActivity extends BaseActivity {
     }
 
     private void logout(){
-        //clear sharedPreferences
+        getApplicationContext().getSharedPreferences("userLogin",
+                MODE_PRIVATE).edit().putString("userEmail", "").apply();
     }
 
 }
