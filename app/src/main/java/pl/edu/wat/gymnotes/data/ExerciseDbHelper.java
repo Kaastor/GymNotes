@@ -92,6 +92,31 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         return cursorCount;
     }
 
+    public String getUserName(String email){
+        String userName = "";
+        String[] columns = {
+                UserEntry._ID, UserEntry.COLUMN_NAME
+        };
+        SQLiteDatabase database = this.getWritableDatabase();
+        String selection = UserEntry.COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = { email };
+
+        Cursor cursor = database.query(UserEntry.TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            userName = cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_NAME));
+        }
+
+        cursor.close();
+        database.close();
+
+        return userName;
+    }
+
     public boolean checkUser(String email, String password){
         String[] columns = {
                 UserEntry._ID

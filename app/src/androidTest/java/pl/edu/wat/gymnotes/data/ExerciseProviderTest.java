@@ -101,6 +101,15 @@ public class ExerciseProviderTest extends AndroidTestCase {
         assertEquals(response, 1);
     }
 
+    @Test
+    public void testGetUserName(){
+        ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
+
+        String userName = helper.getUserName("przemo@wp.pl");
+
+        assertEquals("przemo", userName);
+    }
+
 
     @Test
     public void testProviderRegistry() {

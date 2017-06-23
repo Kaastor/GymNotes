@@ -33,9 +33,7 @@
         <activity
             android:name=".activities.NavigationActivity"
             android:label="@string/main_site_name"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activities.DiaryActivity"
             android:label="@string/diary_name"
@@ -54,10 +52,12 @@
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".activities.RegisterActivity"></activity>
     </application>
 
 </manifest>

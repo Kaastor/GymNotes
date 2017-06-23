@@ -11,10 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pl.edu.wat.gymnotes.activities.LoginActivity">
 
-    <!-- Login progress -->
-
-
-
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
@@ -25,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/textView2"
@@ -34,7 +31,7 @@
                 android:gravity="center"
                 android:text="@string/header_activity_login"
                 android:textColor="@color/colorAccent"
-                android:textSize="45sp"
+                android:textSize="40sp"
                 android:textStyle="bold" />
 
             <android.support.design.widget.TextInputLayout
@@ -84,12 +81,13 @@
 
             <ProgressBar
                 android:id="@+id/login_progress"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="108dp"
-                android:layout_height="163dp"
+                style="?android:attr/progressBarStyleInverse"
+                android:layout_width="59dp"
+                android:layout_height="83dp"
                 android:layout_marginBottom="8dp"
                 android:layout_gravity="center"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:layout_weight="1.16" />
 
         </LinearLayout>
     </ScrollView>

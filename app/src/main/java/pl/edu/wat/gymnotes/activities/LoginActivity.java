@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.wat.gymnotes.R;
+import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
 import pl.edu.wat.gymnotes.helper.InputValidation;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -151,8 +153,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = validation.userLoginValidation(mEmailView, mPasswordView);
             if(focusView == null) {
                 showProgress(true);
-                mAuthTask = new UserLoginTask(validation.getEmail(), validation.getPassword());
-                mAuthTask.execute((Void) null);
+
+                Intent intent = new Intent(this, NavigationActivity.class);
+                intent.putExtra("userName", new ExerciseDbHelper(getApplicationContext()).getUserName(mEmailView.getText().toString()));
+                startActivity(intent);
+//                mAuthTask = new UserLoginTask(validation.getEmail(), validation.getPassword());
+//                mAuthTask.execute((Void) null);
             }
             else{
                 focusView.requestFocus();
@@ -253,7 +259,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 return false;
             }

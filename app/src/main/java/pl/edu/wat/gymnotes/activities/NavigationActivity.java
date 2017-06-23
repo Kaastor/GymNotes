@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import pl.edu.wat.gymnotes.DailyExercisesFragment;
 import pl.edu.wat.gymnotes.DiaryCalendarDialog;
@@ -23,19 +24,19 @@ public class NavigationActivity extends BaseActivity {
     private ActionBarDrawerToggle drawerToggle;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private MenuItem currentMenuItem;
+    private String userName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = getIntent();
+        if(intent != null ) {
+            userName = intent.getStringExtra("userName");
+        }
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         View headerView = nvDrawer.getHeaderView(0);
-//        ImageView  imageView = (ImageView) headerView.findViewById(R.id.nvView);
-//        TextView textView = (TextView)headerView.findViewById(R.id.nvView);
-
-//        imageView.setImageResource(R.drawable.menu_header);
-//        textView.setText("User Name");
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         setupDrawerContent(nvDrawer);
@@ -50,6 +51,9 @@ public class NavigationActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+        View headerV= nvDrawer.getHeaderView(0);
+        TextView navHeader = (TextView)  headerV.findViewById(R.id.navigation_header_userName);
+        navHeader.setText(userName);
     }
 
     @Override
