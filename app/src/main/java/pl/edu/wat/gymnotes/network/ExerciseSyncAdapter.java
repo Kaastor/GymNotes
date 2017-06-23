@@ -50,16 +50,20 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
 
         try {
             // Construct the URL for the spring query
-            Uri builtUri = Uri.parse("http://localhost:8080/rest/exercise/all");
-            URL url = new URL(builtUri.toString());
+
+            URL url = new URL("http://192.168.0.35:8080/rest/exercise/all");
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
+            logger.log(Level.INFO, "before urlConnection.connect()");
+            urlConnection.setDoInput(true);
             urlConnection.connect();
+            logger.log(Level.INFO, "after urlConnection.connect()");
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
+                logger.log(Level.INFO, "inputStream == null");
                 // Nothing to do.
                 return;
             }
