@@ -53,4 +53,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="sync_account_type">gymnotes.wat.edu.pl</string>
+    <string name="content_authority">pl.edu.wat.gymnotes.app</string>
 </resources>
