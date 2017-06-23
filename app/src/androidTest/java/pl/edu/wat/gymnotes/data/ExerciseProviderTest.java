@@ -97,8 +97,8 @@ public class ExerciseProviderTest extends AndroidTestCase {
         User user = new User("przemo", "przemo@wp.pl", "przemo123");
 
         helper.addUser(user);
-        int response = helper.checkUser(user.getEmail());
-        assertEquals(response, 1);
+        boolean response = helper.checkUser(user.getEmail());
+        assertEquals(true, response);
     }
 
     @Test

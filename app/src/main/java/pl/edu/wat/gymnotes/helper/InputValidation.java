@@ -4,7 +4,6 @@ package pl.edu.wat.gymnotes.helper;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import pl.edu.wat.gymnotes.R;

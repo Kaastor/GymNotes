@@ -11,6 +11,7 @@ import android.widget.EditText;
 import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
 import pl.edu.wat.gymnotes.helper.InputValidation;
+import pl.edu.wat.gymnotes.model.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -50,7 +51,12 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             focusView = validation.userExistLoginValidation(mEmailView);
             if(focusView == null) {
-
+                User user = new User(
+                        mNameView.getText().toString(),
+                        mEmailView.getText().toString(),
+                        mPasswordView.getText().toString());
+                new ExerciseDbHelper(getApplicationContext()).addUser(user);
+                this.finish();
             }
             else{
                 focusView.requestFocus();
