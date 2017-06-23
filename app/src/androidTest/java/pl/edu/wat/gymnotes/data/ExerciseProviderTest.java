@@ -18,14 +18,14 @@ import java.util.ArrayList;
 
 public class ExerciseProviderTest extends AndroidTestCase {
 
-    static ArrayList<Long> exercisesRowIds ;
+    private static ArrayList<Long> exercisesRowIds ;
 
     public ExerciseProviderTest() {
     }
 
     public static final String LOG_TAG = ExerciseProviderTest.class.getSimpleName();
 
-    public void deleteAllRecordsFromProvider() {
+    private void deleteAllRecordsFromProvider() {
         mContext.getContentResolver().delete(
                 PracticeEntry.CONTENT_URI,
                 null,
@@ -70,7 +70,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
 //        deleteAllRecords();
     }
 
-    @Test
+
     public void testDeleteFromPractices(){
         // insert our test records into the database
         // Test the basic content provider query
@@ -83,15 +83,14 @@ public class ExerciseProviderTest extends AndroidTestCase {
         // Make sure we get the correct cursor out of the database
     }
 
-    @Test
-    public void testdeleteUsers() {
+    public void testDeleteUsers() {
         mContext.getContentResolver().delete(
                 ExerciseContract.UserEntry.CONTENT_URI,
                 null,
                 null
         );
     }
-    @Test
+
     public void testAddAndQueryUser(){
         ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
         User user = new User("przemo", "przemo@wp.pl", "przemo123");
@@ -101,7 +100,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
         assertEquals(true, response);
     }
 
-    @Test
+
     public void testGetUserName(){
         ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
 
@@ -110,7 +109,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
         assertEquals("przemo", userName);
     }
 
-    @Test
+
     public void testGetUserId(){
         ExerciseDbHelper helper = new ExerciseDbHelper(getContext());
 
@@ -120,7 +119,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
     }
 
 
-    @Test
+
     public void testProviderRegistry() {
         PackageManager pm = mContext.getPackageManager();
 
@@ -222,7 +221,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
                 null,
                 null
         );
-
+        exerciseCursor.close();
         // Make sure we get the correct cursor out of the database
         assertEquals(exerciseCursor.getCount(), 6);
 
@@ -230,7 +229,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
 
 
     static private final int BULK_INSERT_RECORDS_TO_INSERT = 15;
-    static ContentValues[] createBulkInsertPracticeValues() {
+    private static ContentValues[] createBulkInsertPracticeValues() {
         String currentTestDate = TestUtilities.date;
 
         ContentValues[] returnContentValues = new ContentValues[BULK_INSERT_RECORDS_TO_INSERT];
@@ -311,6 +310,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
                 System.out.println(cursor.getCount() + " Gowno " + data + " " + nameEx);
             }while(cursor.moveToNext());
         }
+        cursor.close();
     }
 
     public void testPracticeQueryForDates() {
@@ -331,7 +331,7 @@ public class ExerciseProviderTest extends AndroidTestCase {
             }while(cursor.moveToNext());
         }
 
-
+        cursor.close();
     }
 
 }

@@ -114,6 +114,11 @@ public class NavigationActivity extends BaseActivity {
             case R.id.nav_third_activity:
                 new DiaryCalendarDialog().show(getSupportFragmentManager(), "datePicker");
                 break;
+            case R.id.nav_forth_activity:
+                logout();
+                startActivity(new Intent(this, LoginActivity.class));
+                this.finish();
+                break;
             default:
                 fragmentClass = DailyExercisesFragment.class;
         }
@@ -132,6 +137,10 @@ public class NavigationActivity extends BaseActivity {
     protected void onRestart() {
         super.onRestart();
         nvDrawer.getMenu().getItem(MAIN_SITE_MENU_INDEX).setChecked(true);
+    }
+
+    private void logout(){
+        //clear sharedPreferences
     }
 
 }

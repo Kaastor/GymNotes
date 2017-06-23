@@ -1,16 +1,14 @@
 package pl.edu.wat.gymnotes.activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
-import pl.edu.wat.gymnotes.helper.InputValidation;
+import pl.edu.wat.gymnotes.util.InputValidation;
 import pl.edu.wat.gymnotes.model.User;
 
 public class RegisterActivity extends AppCompatActivity {

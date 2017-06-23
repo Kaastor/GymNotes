@@ -20,6 +20,7 @@
     <string name="about_about"><b>O programie:</b>\nAplikacja trenigowa</string>
     <string name="about_version"><b>Wersja:</b>\n GymNotes, wersja 1.0</string>
     <string name="action_settings">Settings</string>
+    <string name="action_logout">Wyloguj</string>
     <string name="menu_delete">Usuń</string>
 
     <string name="list_item_exercises_series">Serie: </string>

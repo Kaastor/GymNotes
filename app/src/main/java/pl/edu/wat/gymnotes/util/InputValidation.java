@@ -1,4 +1,4 @@
-package pl.edu.wat.gymnotes.helper;
+package pl.edu.wat.gymnotes.util;
 
 
 import android.content.Context;
