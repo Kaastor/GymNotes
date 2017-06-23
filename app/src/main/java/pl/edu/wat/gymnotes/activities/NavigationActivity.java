@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import pl.edu.wat.gymnotes.DailyExercisesFragment;
 import pl.edu.wat.gymnotes.DiaryCalendarDialog;
 import pl.edu.wat.gymnotes.R;
+import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
 
 public class NavigationActivity extends BaseActivity {
 
@@ -29,7 +30,6 @@ public class NavigationActivity extends BaseActivity {
     private ActionBarDrawerToggle drawerToggle;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private MenuItem currentMenuItem;
-    private String userName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +37,6 @@ public class NavigationActivity extends BaseActivity {
 
         logger.log(Level.INFO, this.getLocalClassName() + " Created.");
 
-        Intent intent = getIntent();
-        if(intent != null ) {
-            userName = intent.getStringExtra("userName");
-        }
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         View headerView = nvDrawer.getHeaderView(0);
@@ -60,7 +56,7 @@ public class NavigationActivity extends BaseActivity {
 
         View headerV= nvDrawer.getHeaderView(0);
         TextView navHeader = (TextView)  headerV.findViewById(R.id.navigation_header_userName);
-        navHeader.setText(userName);
+        navHeader.setText(new ExerciseDbHelper(getApplicationContext()).getUserName(LoginActivity.activeUserEmail));
     }
 
     @Override
