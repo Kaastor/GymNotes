@@ -1,5 +1,6 @@
 package pl.edu.wat.gymnotes.activities;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import java.util.logging.Level;
@@ -14,6 +15,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         logger.log(Level.INFO, "onCreate");
     }
 

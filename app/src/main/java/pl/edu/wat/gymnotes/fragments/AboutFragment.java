@@ -1,6 +1,7 @@
 package pl.edu.wat.gymnotes.fragments;
 
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
