@@ -39,5 +39,7 @@ android {
     task appStart(type: Exec, dependsOn: 'installDebug') {
         // linux
         commandLine 'adb', 'shell', 'am', 'start', '-n', 'pl.edu.wat.gymnotes/.activities.SplashActivity'
-}
+        // windows
+        // commandLine 'cmd', '/c', 'adb', 'shell', 'am', 'start', '-n', 'pl.edu.wat.gymnotes/.activities.SplashActivity'
+    }
 }
