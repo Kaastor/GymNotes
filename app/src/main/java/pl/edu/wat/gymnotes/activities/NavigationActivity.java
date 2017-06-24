@@ -19,6 +19,7 @@ import pl.edu.wat.gymnotes.fragments.DailyExercisesFragment;
 import pl.edu.wat.gymnotes.fragments.DiaryCalendarDialog;
 import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
+import pl.edu.wat.gymnotes.network.ExerciseSyncAdapter;
 
 public class NavigationActivity extends BaseActivity {
 
@@ -105,6 +106,7 @@ public class NavigationActivity extends BaseActivity {
             case R.id.nav_first_activity:
                 Intent intent = new Intent(this, CatalogActivity.class);
                 startActivity(intent);
+                ExerciseSyncAdapter.initializeSyncAdapter(getApplicationContext());
                 logger.log(Level.INFO, "Send intent to CatalogActivity");
                 break;
             case R.id.nav_third_activity:

@@ -2,6 +2,7 @@ package pl.edu.wat.gymnotes.data;
 
 import pl.edu.wat.gymnotes.data.ExerciseContract.PracticeEntry;
 import pl.edu.wat.gymnotes.data.ExerciseContract.ExerciseEntry;
+import pl.edu.wat.gymnotes.fragments.ChooseExerciseDialog;
 import pl.edu.wat.gymnotes.model.User;
 
 import android.content.ComponentName;
@@ -10,13 +11,18 @@ import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.test.AndroidTestCase;
 
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExerciseProviderTest extends AndroidTestCase {
+    private Logger logger = Logger.getLogger(ExerciseProviderTest.class.toString());
+
 
     private static ArrayList<Long> exercisesRowIds ;
 
@@ -204,23 +210,27 @@ public class ExerciseProviderTest extends AndroidTestCase {
         ExerciseDbHelper dbHelper = new ExerciseDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        exercisesRowIds = new ArrayList<>();
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wyciskanie", "To jest opis Wyciskanie."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Podskoki", "To jest opis Podskoki."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wyciąg", "To jest opis Wyciąg."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Dipy", "To jest opis Dipy."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wykrok", "To jest opis wykroku."));
-        exercisesRowIds.add(TestUtilities.insertSimpleExerciseValues(mContext, "Wspinaczka", "To jest opis wspinaczki."));
+        final String[] EXERCISE_COLUMNS = {
+                ExerciseContract.ExerciseEntry._ID,
+                ExerciseContract.ExerciseEntry.COLUMN_NAME
+        };
         // Fantastic.  Now that we have a location, add some weather!
-        System.out.println(exercisesRowIds );
+
         // Test the basic content provider query
         Cursor exerciseCursor = mContext.getContentResolver().query(
-                ExerciseEntry.CONTENT_URI,
-                null,
+                ExerciseEntry.buildExercises(),
+                EXERCISE_COLUMNS,
                 null,
                 null,
                 null
         );
+        exerciseCursor.moveToFirst();
+        if (exerciseCursor.moveToFirst()){
+            do{
+                logger.log(Level.INFO,exerciseCursor.getString(exerciseCursor.getColumnIndex(ExerciseContract.ExerciseEntry.COLUMN_NAME)));
+            }while(exerciseCursor.moveToNext());
+        }
+
         exerciseCursor.close();
         // Make sure we get the correct cursor out of the database
         assertEquals(exerciseCursor.getCount(), 6);

@@ -124,6 +124,29 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         return userId;
     }
 
+    public int getExerciseId(String name){
+        logger.log(Level.INFO, "getExerciseId: " + name );
+        String exerciseId = "";
+        String[] columns = {
+                ExerciseEntry._ID, ExerciseEntry.COLUMN_NAME
+        };
+        SQLiteDatabase database = this.getWritableDatabase();
+        String selection = ExerciseEntry.COLUMN_NAME + " = ?";
+        String[] selectionArgs = { name };
+
+        Cursor cursor = database.query(ExerciseEntry.TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            exerciseId = cursor.getString(cursor.getColumnIndex(ExerciseEntry._ID));
+        }
+        cursor.close();
+        return Integer.parseInt(exerciseId);
+    }
+
     public String getUserName(String email){
         logger.log(Level.INFO, "getUserName: " + email );
         String userName = "";

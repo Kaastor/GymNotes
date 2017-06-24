@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.activities.DetailActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
-import pl.edu.wat.gymnotes.network.ExerciseSyncAdapter;
 
 public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor> {
 
@@ -50,22 +49,26 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        logger.log(Level.INFO, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-        ExerciseSyncAdapter.initializeSyncAdapter(getContext());
-        getLoaderManager().initLoader(CATALOG_LOADER, null, this);
     }
 
+
     @Override
-    public void onResume() {
-        super.onResume();
-        ExerciseSyncAdapter.initializeSyncAdapter(getContext());
+    public void onStart() {
+        super.onStart();
+        logger.log(Level.INFO, "started");
+//        ExerciseSyncAdapter.initializeSyncAdapter(getContext());
+        getLoaderManager().restartLoader(CATALOG_LOADER, null, this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        logger.log(Level.INFO, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_grid_catalog, container, false);
-
+//        ExerciseSyncAdapter.initializeSyncAdapter(getContext());
+        getLoaderManager().initLoader(CATALOG_LOADER, null, this);
         mExerciseAdapter = new SimpleCursorAdapter(getActivity(), R.layout.grid_item_exercise, null,
                 new String[]{
                         ExerciseContract.ExerciseEntry.COLUMN_NAME},

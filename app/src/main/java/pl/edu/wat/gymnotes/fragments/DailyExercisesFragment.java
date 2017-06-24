@@ -130,6 +130,7 @@ public class DailyExercisesFragment extends Fragment implements LoaderManager.Lo
         getLoaderManager().restartLoader(DAILY_EXERCISE_LOADER, null, this);
     }
 
+
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
         logger.log(Level.INFO, " onCreateLoader");
