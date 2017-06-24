@@ -1,4 +1,8 @@
+<!DOCTYPE resources [
+    <!ENTITY PC_ip_address_for_spring "192.168.0.35">
+    ]>
 <resources>
+
     <string name="app_name">GymNotes</string>
     <string name="settings_settings">Ustawienia</string>
     <string name="settings_about">O programie</string>
@@ -55,4 +59,6 @@
     </string>
     <string name="sync_account_type">gymnotes.wat.edu.pl</string>
     <string name="content_authority">pl.edu.wat.gymnotes.app</string>
+
+    <string name="url_get_exercise_data">http://&PC_ip_address_for_spring;:8080/rest/exercise/all</string>
 </resources>

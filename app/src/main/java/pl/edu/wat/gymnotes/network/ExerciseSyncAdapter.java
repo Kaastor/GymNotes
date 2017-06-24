@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SyncRequest;
 import android.content.SyncResult;
@@ -12,7 +13,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,10 +23,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import pl.edu.wat.gymnotes.R;
+import pl.edu.wat.gymnotes.data.ExerciseContract;
 
 
 public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
@@ -51,45 +56,46 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
         try {
             // Construct the URL for the spring query
 
-            URL url = new URL("http://192.168.0.35:8080/rest/exercise/all");
-
-            // Create the request to OpenWeatherMap, and open the connection
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            logger.log(Level.INFO, "before urlConnection.connect()");
-            urlConnection.setDoInput(true);
-            urlConnection.connect();
-            logger.log(Level.INFO, "after urlConnection.connect()");
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                logger.log(Level.INFO, "inputStream == null");
-                // Nothing to do.
-                return;
-            }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
-                buffer.append(line + "\n");
-            }
-
-            if (buffer.length() == 0) {
-                // Stream was empty.  No point in parsing.
-                return;
-            }
-            exercisesJsonStr = buffer.toString();
+//            URL url = new URL(getContext().getResources().getString(R.string.url_get_exercise_data));
+//
+//            // Create the request to OpenWeatherMap, and open the connection
+//            urlConnection = (HttpURLConnection) url.openConnection();
+//            urlConnection.setRequestMethod("GET");
+//            logger.log(Level.INFO, "before urlConnection.connect()");
+//            urlConnection.setDoInput(true);
+//            urlConnection.connect();
+//            logger.log(Level.INFO, "after urlConnection.connect()");
+//            InputStream inputStream = urlConnection.getInputStream();
+//            StringBuffer buffer = new StringBuffer();
+//            if (inputStream == null) {
+//                logger.log(Level.INFO, "inputStream == null");
+//                // Nothing to do.
+//                return;
+//            }
+//            reader = new BufferedReader(new InputStreamReader(inputStream));
+//
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+//                // But it does make debugging a *lot* easier if you print out the completed
+//                // buffer for debugging.
+//                buffer.append(line + "\n");
+//            }
+//
+//            if (buffer.length() == 0) {
+//                // Stream was empty.  No point in parsing.
+//                return;
+//            }
+//            exercisesJsonStr = buffer.toString();
             getExerciseDataFromJson(exercisesJsonStr);
 
         }
-        catch (IOException e) {
-            logger.log(Level.INFO, "Error ", e);
-            // If the code didn't successfully get the weather data, there's no point in attempting
-            // to parse it.
-        } catch (JSONException e) {
+//        catch (IOException e) {
+//            logger.log(Level.INFO, "Error ", e);
+//            // If the code didn't successfully get the weather data, there's no point in attempting
+//            // to parse it.
+//        }
+        catch (JSONException e) {
             logger.log(Level.INFO, e.getMessage(), e);
             e.printStackTrace();
         } finally {
@@ -107,7 +113,30 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
     }
 
     private void getExerciseDataFromJson(String exerciseJsonStr) throws JSONException {
+        exerciseJsonStr = "{\"exercises\":[{\"name\":\"Pompki\",\"description\":\"Opis Pompki\"},{\"name\":\"Przysiady\",\"description\":\"Opis Przysiady\"},{\"name\":\"Martwy ciag\",\"description\":\"Opis Martwy ciag\"},{\"name\":\"Brzuszki\",\"description\":\"Opis Brzuszki\"},{\"name\":\"Podskoki\",\"description\":\"Opis Podskoki\"},{\"name\":\"Wyciskanie\",\"description\":\"Opis Wyciskanie\"},{\"name\":\"Wykroki\",\"description\":\"Opis Wykroki\"}]}";
         System.out.println(exerciseJsonStr);
+
+        final String EX_EX_LIST = "exercises";
+        final String EX_NAME = "name";
+        final String EX_DESC = "description";
+
+        JSONObject exerciseJson = new JSONObject(exerciseJsonStr);
+        JSONArray exercises = exerciseJson.getJSONArray(EX_EX_LIST);
+
+        Vector<ContentValues> cVVector = new Vector<>(exercises.length());
+
+        for (int i=0; i<exercises.length(); i++) {
+            JSONObject exercise = exercises.getJSONObject(i);
+            String name = exercise.getString(EX_NAME);
+            String description = exercise.getString(EX_DESC);
+
+            ContentValues exerciseValues = new ContentValues();
+            exerciseValues.put(ExerciseContract.ExerciseEntry.COLUMN_NAME, name);
+            exerciseValues.put(ExerciseContract.ExerciseEntry.COLUMN_DESCRIPTION, description);
+            cVVector.add(exerciseValues);
+        }
+
+
     }
 
         /**
