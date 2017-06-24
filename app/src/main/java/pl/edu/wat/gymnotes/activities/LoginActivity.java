@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 
 import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
+import pl.edu.wat.gymnotes.network.ExerciseSyncAdapter;
 import pl.edu.wat.gymnotes.util.InputValidation;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -65,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         logger.log(Level.INFO, "onCreate");
+        logger.log(Level.INFO, "Init ExerciseSyncAdapter");
+        ExerciseSyncAdapter.initializeSyncAdapter(this);
 
         setContentView(R.layout.activity_login);
         initLayouts();

@@ -49,7 +49,7 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
         logger.log(Level.INFO, "Sync started");
         performSync();
 //        new PracticeSync(getContext()).performSync();
-//        new UserSync(getContext()).performSync();
+        new UserSync(getContext()).performSync();
     }
 
     private void performSync()   {
