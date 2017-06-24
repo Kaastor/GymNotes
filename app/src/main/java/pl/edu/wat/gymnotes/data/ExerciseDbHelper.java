@@ -49,6 +49,9 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
                 PracticeEntry.COLUMN_DATE + " TEXT NOT NULL, " +
                 PracticeEntry.COLUMN_SERIES + " INTEGER NOT NULL, " +
                 PracticeEntry.COLUMN_REPS + " INTEGER NOT NULL, " +
+                " UNIQUE (" + PracticeEntry.COLUMN_USER_KEY + ", " +
+                PracticeEntry.COLUMN_EX_KEY + ", " +
+                PracticeEntry.COLUMN_DATE + "), " +
 
                 " FOREIGN KEY (" + PracticeEntry.COLUMN_EX_KEY + ") REFERENCES " +
                 ExerciseEntry.TABLE_NAME + " (" + ExerciseEntry._ID + ") " +

@@ -28,18 +28,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import pl.edu.wat.gymnotes.R;
+import pl.edu.wat.gymnotes.data.ExerciseContract;
 import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
 import pl.edu.wat.gymnotes.model.User;
 
 
-public class UserSyncAdapter extends AbstractThreadedSyncAdapter{
+public class PracticeSyncAdapter extends AbstractThreadedSyncAdapter {
 
-    private static Logger logger = Logger.getLogger(UserSyncAdapter.class.toString());
+    private static Logger logger = Logger.getLogger(PracticeSyncAdapter.class.toString());
 
     public static final long SYNC_INTERVAL = 60; //seconds
     public static final long SYNC_FLEXTIME = SYNC_INTERVAL;
 
-    UserSyncAdapter(Context context, boolean autoInitialize) {
+    PracticeSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
     }
 
@@ -53,7 +54,7 @@ public class UserSyncAdapter extends AbstractThreadedSyncAdapter{
         String format = "json";
 
 //        try {
-//            URL url = new URL(getContext().getResources().getString(R.string.url_get_user_data));
+//            URL url = new URL(getContext().getResources().getString(R.string.url_get_practice_data));
 //            urlConnection = (HttpURLConnection) url.openConnection();
 //            urlConnection.setRequestMethod("GET");
 //            urlConnection.connect();
@@ -74,13 +75,11 @@ public class UserSyncAdapter extends AbstractThreadedSyncAdapter{
 //                return;
 //            }
 //            userJsonStr = buffer.toString();
-//            getUserDataFromJson(userJsonStr);
+//            getPracticeDataFromJson(userJsonStr);
 //
-//        }
-//        catch (IOException e) {
+//        } catch (IOException e) {
 //            logger.log(Level.INFO, "Error ", e);
-//        }
-//        catch (JSONException e) {
+//        } catch (JSONException e) {
 //            logger.log(Level.INFO, e.getMessage(), e);
 //            e.printStackTrace();
 //        } finally {
@@ -97,32 +96,42 @@ public class UserSyncAdapter extends AbstractThreadedSyncAdapter{
 //        }
     }
 
-    private void getUserDataFromJson(String userJsonStr) throws JSONException {
-        System.out.println(userJsonStr);
+    private void getPracticeDataFromJson(String practiceJsonStr) throws JSONException {
+        System.out.println(practiceJsonStr);
 
-        final String US_LIST = "users";
-        final String US_NAME = "name";
-        final String US_EMAIL = "email";
-        final String US_PASS = "password";
+        final String PR_LIST = "practices";
+        final String PR_USER = "user";
+        final String PR_EXERCISE = "exercise";
+        final String PR_DATE = "date";
+        final String PR_SERIES = "series";
+        final String PR_REPS = "reps";
 
-        JSONObject userJson = new JSONObject(userJsonStr);
-        JSONArray users = userJson.getJSONArray(US_LIST);
+        JSONObject practiceJson = new JSONObject(practiceJsonStr);
+        JSONArray practices = practiceJson.getJSONArray(PR_LIST);
 
-        Vector<User> cVVector = new Vector<>(users.length());
+        Vector<ContentValues> cVVector = new Vector<>(practices.length());
 
-        for (int i=0; i<users.length(); i++) {
-            JSONObject user = users.getJSONObject(i);
-            String name = user.getString(US_NAME);
-            String password = user.getString(US_PASS);
-            String email = user.getString(US_EMAIL);
+        for (int i = 0; i < practices.length(); i++) {
+            JSONObject practice = practices.getJSONObject(i);
+            String user = practice.getString(PR_USER);
+            String reps = practice.getString(PR_REPS);
+            String date = practice.getString(PR_DATE);
+            String series = practice.getString(PR_SERIES);
+            String exercise = practice.getString(PR_EXERCISE);
 
-            User newUser = new User(name, email, password);
-            cVVector.add(newUser);
+            ContentValues practiceValues = new ContentValues();
+            practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_EX_KEY, exercise);
+            practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_USER_KEY, user);
+            practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_DATE, date);
+            practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_SERIES, series);
+            practiceValues.put(ExerciseContract.PracticeEntry.COLUMN_REPS, reps);
+            cVVector.add(practiceValues);
         }
         long inserted = 0;
-        for( User user : cVVector) {
+        for( ContentValues contentValues : cVVector) {
             ExerciseDbHelper dbHelper = new ExerciseDbHelper(getContext());
-            dbHelper.addUser(user);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            inserted = db.insertWithOnConflict(ExerciseContract.PracticeEntry.TABLE_NAME, null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
         }
 
         logger.log(Level.INFO, "Inserted: ", inserted);
@@ -185,6 +194,7 @@ public class UserSyncAdapter extends AbstractThreadedSyncAdapter{
          */
         syncImmediately(newAccount, context);
     }
+
     public static void initializeSyncAdapter(Context context) {
         logger.log(Level.INFO, "initializeSyncAdapter");
         getSyncAccount(context);
@@ -192,6 +202,7 @@ public class UserSyncAdapter extends AbstractThreadedSyncAdapter{
 
     /**
      * Helper method to have the sync adapter sync immediately
+     *
      * @param context The context used to access the account service
      */
     public static void syncImmediately(Account account, Context context) {
@@ -202,5 +213,4 @@ public class UserSyncAdapter extends AbstractThreadedSyncAdapter{
         ContentResolver.requestSync(account,
                 context.getString(R.string.content_authority), bundle);
     }
-
 }

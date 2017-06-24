@@ -97,17 +97,17 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/sync_adapter" />
         </service>
-        <service
-            android:name=".network.UserSyncService"
-            android:exported="true"
-            >
-            <intent-filter>
-                <action android:name="android.content.SyncAdapter" />
-            </intent-filter>
-            <meta-data
-                android:name="android.content.SyncAdapter"
-                android:resource="@xml/sync_adapter" />
-        </service>
+        <!--<service-->
+            <!--android:name=".network.UserSyncService"-->
+            <!--android:exported="true"-->
+            <!--&gt;-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.content.SyncAdapter" />-->
+            <!--</intent-filter>-->
+            <!--<meta-data-->
+                <!--android:name="android.content.SyncAdapter"-->
+                <!--android:resource="@xml/sync_adapter" />-->
+        <!--</service>-->
     </application>
 
 </manifest>
