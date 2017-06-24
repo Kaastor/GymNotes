@@ -61,4 +61,5 @@
     <string name="content_authority">pl.edu.wat.gymnotes.app</string>
 
     <string name="url_get_exercise_data">http://&PC_ip_address_for_spring;:8080/rest/exercise/all</string>
+    <string name="url_get_user_data">http://&PC_ip_address_for_spring;:8080/rest/user/all</string>
 </resources>

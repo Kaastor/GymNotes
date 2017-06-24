@@ -85,9 +85,20 @@
                 android:resource="@xml/authenticator" />
         </service>
 
-        <!-- The SyncAdapter service -->
+        <!-- The SyncAdapter service s-->
         <service
             android:name=".network.ExerciseSyncService"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_adapter" />
+        </service>
+        <service
+            android:name=".network.UserSyncService"
             android:exported="true"
             >
             <intent-filter>
