@@ -38,8 +38,9 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_EXERCISE_TABLE = "CREATE TABLE " + ExerciseEntry.TABLE_NAME + " (" +
                 ExerciseEntry._ID + " INTEGER PRIMARY KEY," +
                 ExerciseEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                ExerciseEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL " +
-                " );";
+                ExerciseEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
+                " UNIQUE (" + ExerciseEntry.COLUMN_NAME +
+                " ));";
 
         final String SQL_CREATE_PRACTICE_TABLE = "CREATE TABLE " + PracticeEntry.TABLE_NAME + " (" +
                 PracticeEntry._ID + " INTEGER PRIMARY KEY," +

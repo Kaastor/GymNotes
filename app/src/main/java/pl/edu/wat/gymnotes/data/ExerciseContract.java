@@ -37,14 +37,14 @@ public class ExerciseContract {
 
     public static final class ExerciseEntry implements BaseColumns{
 
-        static final Uri CONTENT_URI = BASE_CONTENT_URI.
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_EXERCISE).build();
-        static final String CONTENT_TYPE =
+        public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EXERCISE;
-        static final String CONTENT_ITEM_TYPE =
+        public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EXERCISE;
 
-        static final String TABLE_NAME = "exercise";
+        public static final String TABLE_NAME = "exercise";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DESCRIPTION = "description";
 

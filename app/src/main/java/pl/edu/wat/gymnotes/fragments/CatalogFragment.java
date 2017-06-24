@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.activities.DetailActivity;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
+import pl.edu.wat.gymnotes.network.ExerciseSyncAdapter;
 
 public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor> {
 
@@ -50,13 +51,19 @@ public class CatalogFragment extends Fragment implements LoaderCallbacks<Cursor>
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ExerciseSyncAdapter.initializeSyncAdapter(getContext());
         getLoaderManager().initLoader(CATALOG_LOADER, null, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ExerciseSyncAdapter.initializeSyncAdapter(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_grid_catalog, container, false);
 
         mExerciseAdapter = new SimpleCursorAdapter(getActivity(), R.layout.grid_item_exercise, null,

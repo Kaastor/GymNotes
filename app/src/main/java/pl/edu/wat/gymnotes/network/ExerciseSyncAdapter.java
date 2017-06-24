@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SyncRequest;
 import android.content.SyncResult;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,14 +30,15 @@ import java.util.logging.Logger;
 
 import pl.edu.wat.gymnotes.R;
 import pl.edu.wat.gymnotes.data.ExerciseContract;
+import pl.edu.wat.gymnotes.data.ExerciseDbHelper;
 
 
 public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
 
     private static Logger logger = Logger.getLogger(ExerciseSyncAdapter.class.toString());
 
-    public static final int SYNC_INTERVAL = 6; //seconds
-    public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
+    public static final long SYNC_INTERVAL = 60; //seconds
+    public static final long SYNC_FLEXTIME = SYNC_INTERVAL;
 
     ExerciseSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -56,45 +58,42 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
         try {
             // Construct the URL for the spring query
 
-//            URL url = new URL(getContext().getResources().getString(R.string.url_get_exercise_data));
-//
-//            // Create the request to OpenWeatherMap, and open the connection
-//            urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setRequestMethod("GET");
-//            logger.log(Level.INFO, "before urlConnection.connect()");
-//            urlConnection.setDoInput(true);
-//            urlConnection.connect();
-//            logger.log(Level.INFO, "after urlConnection.connect()");
-//            InputStream inputStream = urlConnection.getInputStream();
-//            StringBuffer buffer = new StringBuffer();
-//            if (inputStream == null) {
-//                logger.log(Level.INFO, "inputStream == null");
-//                // Nothing to do.
-//                return;
-//            }
-//            reader = new BufferedReader(new InputStreamReader(inputStream));
-//
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-//                // But it does make debugging a *lot* easier if you print out the completed
-//                // buffer for debugging.
-//                buffer.append(line + "\n");
-//            }
-//
-//            if (buffer.length() == 0) {
-//                // Stream was empty.  No point in parsing.
-//                return;
-//            }
-//            exercisesJsonStr = buffer.toString();
+            URL url = new URL(getContext().getResources().getString(R.string.url_get_exercise_data));
+
+            // Create the request to OpenWeatherMap, and open the connection
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+            if (inputStream == null) {
+                logger.log(Level.INFO, "inputStream == null");
+                // Nothing to do.
+                return;
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                // But it does make debugging a *lot* easier if you print out the completed
+                // buffer for debugging.
+                buffer.append(line + "\n");
+            }
+
+            if (buffer.length() == 0) {
+                // Stream was empty.  No point in parsing.
+                return;
+            }
+            exercisesJsonStr = buffer.toString();
             getExerciseDataFromJson(exercisesJsonStr);
 
         }
-//        catch (IOException e) {
-//            logger.log(Level.INFO, "Error ", e);
-//            // If the code didn't successfully get the weather data, there's no point in attempting
-//            // to parse it.
-//        }
+        catch (IOException e) {
+            logger.log(Level.INFO, "Error ", e);
+            // If the code didn't successfully get the weather data, there's no point in attempting
+            // to parse it.
+        }
         catch (JSONException e) {
             logger.log(Level.INFO, e.getMessage(), e);
             e.printStackTrace();
@@ -113,7 +112,6 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
     }
 
     private void getExerciseDataFromJson(String exerciseJsonStr) throws JSONException {
-        exerciseJsonStr = "{\"exercises\":[{\"name\":\"Pompki\",\"description\":\"Opis Pompki\"},{\"name\":\"Przysiady\",\"description\":\"Opis Przysiady\"},{\"name\":\"Martwy ciag\",\"description\":\"Opis Martwy ciag\"},{\"name\":\"Brzuszki\",\"description\":\"Opis Brzuszki\"},{\"name\":\"Podskoki\",\"description\":\"Opis Podskoki\"},{\"name\":\"Wyciskanie\",\"description\":\"Opis Wyciskanie\"},{\"name\":\"Wykroki\",\"description\":\"Opis Wykroki\"}]}";
         System.out.println(exerciseJsonStr);
 
         final String EX_EX_LIST = "exercises";
@@ -135,8 +133,14 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
             exerciseValues.put(ExerciseContract.ExerciseEntry.COLUMN_DESCRIPTION, description);
             cVVector.add(exerciseValues);
         }
+        long inserted = 0;
+        for( ContentValues contentValues : cVVector) {
+            ExerciseDbHelper dbHelper = new ExerciseDbHelper(getContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            inserted = db.insertWithOnConflict(ExerciseContract.ExerciseEntry.TABLE_NAME, null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+        }
 
-
+        logger.log(Level.INFO, "Inserted: ", inserted);
     }
 
         /**
@@ -155,7 +159,7 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
                 (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
 
         Account[] accounts = accountManager.getAccounts();
-        logger.log(Level.INFO, "accountManager.getAccounts()1 " + accounts[0].toString());
+        logger.log(Level.INFO, "accountManager.getAccounts() " + accounts[0].toString());
         onAccountCreated(accounts[0], context);
         return accounts[0];
     }
@@ -163,7 +167,7 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
     /**
      * Helper method to schedule the sync adapter periodic execution
      */
-    public static void configurePeriodicSync(Account account, Context context, int syncInterval, int flexTime) {
+    public static void configurePeriodicSync(Account account, Context context, long syncInterval, long flexTime) {
         logger.log(Level.INFO, "configurePeriodicSync");
         String authority = context.getString(R.string.content_authority);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
