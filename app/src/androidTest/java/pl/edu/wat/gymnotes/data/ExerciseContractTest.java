@@ -40,7 +40,6 @@ public class ExerciseContractTest extends AndroidTestCase {
         assertNotNull("Error: Null Uri returned.  You must fill-in buildExerciseForName in " +
                         "ExerciseContract.",
                 exerciseUri);
-        System.out.println("gowno" + exerciseUri.toString());
         assertEquals("Error: Exercise name not properly appended to the end of the Uri",
                 TEST_EXERCISE_NAME, exerciseUri.getLastPathSegment());
         assertEquals("Error: Exercise name Uri doesn't match our expected result",
@@ -55,7 +54,6 @@ public class ExerciseContractTest extends AndroidTestCase {
         assertNotNull("Error: Null Uri returned.  You must fill-in buildExercises in " +
                         "ExerciseContract.",
                 exerciseUri);
-        System.out.println("gowno" + exerciseUri.toString());
 
         assertEquals("Error: Exercise name Uri doesn't match our expected result",
                 exerciseUri.toString(),

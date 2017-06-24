@@ -283,7 +283,6 @@ public class ExerciseProviderTest extends AndroidTestCase {
         if (cursor.moveToFirst()){
             do{
                 String data = cursor.getString(cursor.getColumnIndex("date"));
-                System.out.println("Gowno " + data);
             }while(cursor.moveToNext());
         }
 
@@ -317,7 +316,6 @@ public class ExerciseProviderTest extends AndroidTestCase {
             do{
                 String data = cursor.getString(cursor.getColumnIndex("date"));
                 String nameEx = cursor.getString(cursor.getColumnIndex("name"));
-                System.out.println(cursor.getCount() + " Gowno " + data + " " + nameEx);
             }while(cursor.moveToNext());
         }
         cursor.close();
@@ -337,7 +335,6 @@ public class ExerciseProviderTest extends AndroidTestCase {
         if (cursor.moveToFirst()){
             do{
                 String data = cursor.getString(cursor.getColumnIndex("date"));
-                System.out.println(cursor.getCount() + " Gowno " + data);
             }while(cursor.moveToNext());
         }
 

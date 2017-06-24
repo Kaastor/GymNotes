@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -117,8 +118,6 @@ public class AddTrainingFragment extends Fragment implements LoaderManager.Loade
             }else {
                 newEntrySeries = Integer.parseInt(series.getText().toString());
                 newEntryReps = Integer.parseInt(reps.getText().toString());
-                if(newEntryExerciseId == 0)
-                    newEntryExerciseId = 1;
 
                 saveToDatabase();
 
@@ -126,8 +125,7 @@ public class AddTrainingFragment extends Fragment implements LoaderManager.Loade
             }
         }
         else
-            Snackbar.make(rootView, "Pola nie mogą być puste!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            Toast.makeText(getActivity(), "Pola nie mogą być puste!", Toast.LENGTH_SHORT).show();
     }
 
     private void saveToDatabase(){
