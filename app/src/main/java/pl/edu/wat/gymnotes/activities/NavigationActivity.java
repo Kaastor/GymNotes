@@ -106,7 +106,6 @@ public class NavigationActivity extends BaseActivity {
             case R.id.nav_first_activity:
                 Intent intent = new Intent(this, CatalogActivity.class);
                 startActivity(intent);
-                ExerciseSyncAdapter.initializeSyncAdapter(getApplicationContext());
                 logger.log(Level.INFO, "Send intent to CatalogActivity");
                 break;
             case R.id.nav_third_activity:

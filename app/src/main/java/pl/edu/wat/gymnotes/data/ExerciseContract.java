@@ -71,7 +71,7 @@ public class ExerciseContract {
         static final Uri CONTENT_DEL_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_DEL_PRACTICE).build();
 
-        static final Uri CONTENT_URI = BASE_CONTENT_URI.
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.
                 buildUpon().appendPath(PATH_PRACTICE).build();
         static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRACTICE;

@@ -50,7 +50,5 @@ public class SplashActivity extends AppCompatActivity {
             logger.log(Level.INFO, "finished");
         }
         setContentView(R.layout.activity_splash);
-        logger.log(Level.INFO, "Init ExerciseSyncAdapter");
-        ExerciseSyncAdapter.initializeSyncAdapter(this);
     }
 }

@@ -48,8 +48,8 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
         logger.log(Level.INFO, "Sync started");
         performSync();
-//        new PracticeSync(getContext()).performSync();
         new UserSync(getContext()).performSync();
+        new PracticeSync(getContext()).performSync();
     }
 
     private void performSync()   {
@@ -206,6 +206,11 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
     }
     public static void initializeSyncAdapter(Context context) {
         logger.log(Level.INFO, "initializeSyncAdapter");
+        context.getContentResolver().delete(
+                ExerciseContract.PracticeEntry.CONTENT_URI,
+                null,
+                null
+        );
         getSyncAccount(context);
     }
 

@@ -99,6 +99,13 @@ public class LoginActivity extends AppCompatActivity {
         registerButton = (Button) findViewById(R.id.email_register_button);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        logger.log(Level.INFO, "onResume, Init ExerciseSyncAdapter");
+        ExerciseSyncAdapter.initializeSyncAdapter(this);
+    }
+
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
