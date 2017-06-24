@@ -79,7 +79,7 @@ public class ExerciseDbHelper extends SQLiteOpenHelper {
         contentValues.put(UserEntry.COLUMN_EMAIL, user.getEmail());
         contentValues.put(UserEntry.COLUMN_PASSWORD, user.getPassword());
 
-        database.insert(UserEntry.TABLE_NAME, null, contentValues);
+        database.insertWithOnConflict(UserEntry.TABLE_NAME, null, contentValues,  SQLiteDatabase.CONFLICT_IGNORE);
         database.close();
     }
     public boolean checkUser(String email){
