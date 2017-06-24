@@ -47,7 +47,12 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
     @Override
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
         logger.log(Level.INFO, "Sync started");
+        performSync();
+//        new PracticeSync(getContext()).performSync();
+//        new UserSync(getContext()).performSync();
+    }
 
+    private void performSync()   {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
@@ -57,7 +62,6 @@ public class ExerciseSyncAdapter extends AbstractThreadedSyncAdapter{
 
         try {
             // Construct the URL for the spring query
-
             URL url = new URL(getContext().getResources().getString(R.string.url_get_exercise_data));
 
             // Create the request to OpenWeatherMap, and open the connection
